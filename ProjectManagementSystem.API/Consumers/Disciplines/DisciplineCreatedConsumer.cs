@@ -1,0 +1,27 @@
+﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
+using ProjectManagementSystem.Domain.Disciplines;
+using ProjectManagementSystem.Infrastucture.Data;
+using SmartCollege.RabbitMQ.Contracts.Disciplines;
+
+namespace ProjectManagementSystem.API.Consumers.Disciplines;
+
+public class DisciplineCreatedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IDisciplineCreated>
+{
+    private readonly ProjectManagementSystemDbContext dbContext = dbContext;
+
+    public async Task Consume(ConsumeContext<IDisciplineCreated> context)
+    {
+        var message = context.Message;
+
+        var disciplineId = new DisciplineId(message.Id);
+
+        var discipline = await dbContext.Disciplines.SingleAsync(d => d.Id == disciplineId);
+
+        Discipline.Create(disciplineId, message.Name);
+
+        dbContext.Add(discipline);
+
+        await dbContext.SaveChangesAsync();
+    }
+}
