@@ -1,5 +1,4 @@
 ﻿using ProjectManagementSystem.Domain.Projects;
-using ProjectManagementSystem.Domain.ProjectStageMarks;
 using ProjectManagementSystem.Domain.Students;
 using SharedKernel;
 
@@ -12,7 +11,6 @@ public sealed class ProjectStage : Entity<ProjectStageId>
     public string Description { get; private set; }
     public DateTime Deadline { get; private set; }
     public PinnedFile[]? PinnedFiles { get; private set; }
-    public ProjectStageMark? Mark { get; private set; } = null;
     public Student Student { get; private set; }
     public Project Project { get; private set; }
 

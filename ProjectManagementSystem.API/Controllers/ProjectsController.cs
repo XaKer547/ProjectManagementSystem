@@ -1,9 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ProjectManagementSystem.API.Helpers;
+using ProjectManagementSystem.API.Models;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
 using ProjectManagementSystem.Application.Commands.ProjectStagesAnswers;
-using ProjectManagementSystem.Application.Models;
 using ProjectManagementSystem.Application.Queries.Projects;
 using ProjectManagementSystem.Application.Queries.ProjectStages;
 using ProjectManagementSystem.Domain.Disciplines;
@@ -32,8 +33,17 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
-    public async Task<IActionResult> CreateProject(CreateProjectCommand command)
+    public async Task<IActionResult> CreateProject(CreateProjectDTO createProject)
     {
+        var command = new CreateProjectCommand()
+        {
+            Name = createProject.Name,
+            SubjectArea = createProject.SubjectArea,
+            ProjectType = createProject.ProjectType,
+            DisciplineId = new DisciplineId(createProject.DisciplineId),
+            GroupId = new GroupId(createProject.GroupId)
+        };
+
         var projectId = await mediator.Send(command);
 
         return Created(string.Empty, projectId);
@@ -104,6 +114,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     /// Обновить работу
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
+    /// <param name="updateProject"></param>
     /// <response code="204">Успешное обновление</response>
     /// <response code="400">Запрос не прошел валидацию</response>
     /// <response code="403">Пользователь не имеет доступ на изменение работы</response>
@@ -134,6 +145,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     /// Добавить этап работы
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
+    /// <param name="model"></param>
     /// <response code="201">Успешно добавлен</response>
     /// <response code="400">Запрос не прошел валидацию</response>
     /// <response code="403">Пользователь не имеет доступ на добавление этапов работы</response>
@@ -143,44 +155,21 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> AddProjectStage(Guid projectId, IEnumerable<IFormFile>? files)
+    public async Task<IActionResult> AddProjectStage(Guid projectId, CreateProjectStageModel model)
     {
-        files.Select(f =>
+        var command = new CreateProjectStageCommand()
         {
-            long fileSize = f.Length;
-            string fileType = f.ContentType;
+            ProjectId = new ProjectId(projectId),
+            Deadline = model.CreateProjectStage.Deadline,
+            Description = model.CreateProjectStage.Description,
+            Name = model.CreateProjectStage.Name,
+            PinnedFiles = model.Files?.ToDTO()
+            .ToArray()
+        };
 
-            byte[] bytes;
+        var projectStageId = await mediator.Send(command);
 
-            using (var stream = new MemoryStream())
-            {
-                f.CopyTo(stream);
-
-                bytes = stream.ToArray();
-            }
-
-            var dto = new FileDTO()
-            {
-                Name = f.Name + Path.GetExtension(f.FileName),
-                File = bytes
-            };
-
-            return dto;
-        });
-
-        //var command = new CreateProjectStageCommand()
-        //{
-        //    ProjectId = new ProjectId(projectId),
-        //    Deadline = createProjectStage.Deadline,
-        //    Description = createProjectStage.Description,
-        //    Name = createProjectStage.Name,
-        //};
-
-        //var projectStageId = await mediator.Send(command);
-        
-        return Ok();
-
-        //return Created(string.Empty, projectStageId);
+        return Created(string.Empty, projectStageId);
     }
 
     /// <summary>
@@ -188,6 +177,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
     /// <param name="stageId">Идентификатор этапа работы</param>
+    /// <param name="model"></param>
     /// <response code="204">Успешное обновление</response>
     /// <response code="400">Запрос не прошел валидацию</response>
     /// <response code="403">Пользователь не имеет доступ на изменение этапа работы</response>
@@ -197,17 +187,17 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> UpdateProjectStage(Guid projectId, Guid stageId, UpdateProjectStageDTO updateProjectStage)
+    public async Task<IActionResult> UpdateProjectStage(Guid projectId, Guid stageId, UpdateProjectStageModel model)
     {
-        //handle files
-
         var command = new UpdateProjectStageCommand()
         {
             ProjectId = new ProjectId(projectId),
             ProjectStageId = new ProjectStageId(stageId),
-            Deadline = updateProjectStage.Deadline,
-            Description = updateProjectStage.Description,
-            Name = updateProjectStage.Name,
+            Deadline = model.UpdateProjectStage.Deadline,
+            Description = model.UpdateProjectStage.Description,
+            Name = model.UpdateProjectStage.Name,
+            PinnedFiles = model.Files?.ToDTO()
+            .ToArray()
         };
 
         await mediator.Send(command);
@@ -246,7 +236,6 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     /// Получить этапы работы
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
-    /// <param name="stageId">Идентификатор этапа работы</param>
     /// <response code="200"></response>
     /// <response code="404">работа не найдена</response>
     [HttpGet("{projectId}/stages")]
@@ -292,6 +281,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
     /// <param name="stageId">Идентификатор этапа работы</param>
+    /// <param name="file"></param>
     /// <response code="200"></response>
     /// <response code="404">работа или этап работы не найден</response>
     [HttpPost("{projectId}/stages/{stageId}/answer")]
@@ -299,15 +289,11 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> AnswerStage(Guid projectId, Guid stageId, IFormFile file)
     {
-        //handle file
-
-        //
-
         var command = new CreateProjectStageAnswerCommand()
         {
             ProjectId = new ProjectId(projectId),
             ProjectStageId = new ProjectStageId(stageId),
-
+            PinnedFile = file.ToDTO()
         };
 
         var answerId = await mediator.Send(command);
@@ -320,24 +306,20 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
     /// <param name="stageId">Идентификатор этапа работы</param>
+    /// <param name="model"></param>
     /// <response code="201"></response>
     /// <response code="404">работа или этап работы не найден</response>
     [HttpPatch("{projectId}/stages/{stageId}/answer/return")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> ReturnStageAnswer(Guid projectId, Guid stageId, IFormFile file, [FromBody] string remark)
+    public async Task<IActionResult> ReturnStageAnswer(Guid projectId, Guid stageId, ReturnStageAnswerModel model)
     {
-        //handle File
-
-
-
-        //
-
         var command = new ReturnProjectStageAnswerCommand()
         {
             ProjectId = new ProjectId(projectId),
             ProjectStageId = new ProjectStageId(stageId),
-            Remark = remark
+            Remark = model.Remark,
+            PinnedFile = model.File?.ToDTO()
         };
 
         await mediator.Send(command);
@@ -350,6 +332,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
     /// <param name="stageId">Идентификатор этапа работы</param>
+    /// <param name="file"></param>
     /// <response code="204"></response>
     /// <response code="404">работа или этап работы не найден</response>
     [HttpPatch("{projectId}/stages/{stageId}/answer")]
@@ -357,15 +340,11 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> ChangeStageAnswer(Guid projectId, Guid stageId, IFormFile file)
     {
-        //handle file
-
-        //
-
         var command = new UpdateProjectStageAnswerCommand()
         {
             ProjectId = new ProjectId(projectId),
             ProjectStageId = new ProjectStageId(stageId),
-
+            PinnedFile = file.ToDTO()
         };
 
         await mediator.Send(command);
@@ -402,6 +381,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     /// Выставить итоговую оценку
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
+    /// <param name="gradeProject"></param>
     /// <response code="204"></response>
     /// <response code="404">работа или этап работы не найден</response>
     [HttpPatch("{projectId}/grade")]

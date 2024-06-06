@@ -40,6 +40,7 @@ public sealed class Project : Entity<ProjectId>
 
         return project;
     }
+    
     public void Update(string name, string subjectArea, ProjectTypes type, Discipline discipline, Group group)
     {
         Name = name;
@@ -48,15 +49,14 @@ public sealed class Project : Entity<ProjectId>
         Discipline = discipline;
         Group = group;
     }
+
     public void Delete()
     {
         Deleted = true;
+    }
 
-        //var projectDeletedEvent = new ProjectDeletedEvent()
-        //{
-        //    ProjectId = Id
-        //};
-
-        //AddEvent(projectDeletedEvent);
+    public void Complete()
+    {
+        Completed = true;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ProjectManagementSystem.Application.Models;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
 
@@ -11,5 +12,5 @@ public sealed record UpdateProjectStageCommand : IRequest
     public string Name { get; init; }
     public string Description { get; init; }
     public DateTime Deadline { get; init; }
-    public string[]? PinnedFiles { get; init; }
+    public FileDTO[]? PinnedFiles { get; init; }
 }

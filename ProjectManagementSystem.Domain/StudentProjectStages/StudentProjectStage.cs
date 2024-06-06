@@ -13,6 +13,7 @@ public class StudentProjectStage : Entity<StudentProjectStageId>
 
     public ProjectStage Stage { get; private set; }
     public Student Student { get; private set; }
+    public int Mark { get; private set; }
 
     public static StudentProjectStage Create(ProjectStage stage, Student student)
     {
@@ -23,5 +24,9 @@ public class StudentProjectStage : Entity<StudentProjectStageId>
         };
 
         return studentStage;
+    }
+    public void Graduate(int mark)
+    {
+        Mark = mark;
     }
 }

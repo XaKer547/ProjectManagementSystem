@@ -1,13 +1,14 @@
 ﻿using MediatR;
+using ProjectManagementSystem.Application.Models;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStageAnswers;
 using ProjectManagementSystem.Domain.ProjectStages;
 
-namespace ProjectManagementSystem.Application.Commands.ProjectStagesAnswers;
+namespace ProjectManagementSystem.Application.Commands.ProjectStageAnswers;
 
 public sealed record CreateProjectStageAnswerCommand : IRequest<ProjectStageAnswerId>
 {
     public ProjectId ProjectId { get; init; }
     public ProjectStageId ProjectStageId { get; init; }
-    public string PinnedFile { get; init; }
+    public FileDTO PinnedFile { get; init; }
 }
