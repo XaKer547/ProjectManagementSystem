@@ -13,5 +13,35 @@ public sealed class Student : Entity<StudentId>
     public string LastName { get; private set; }
     public bool Graduated { get; private set; }
     public Group Group { get; private set; }
-    public string Email { get; private set; }
+
+    public static Student Create(StudentId studentId, string firstName, string middleName, string lastName, Group group)
+    {
+        var student = new Student()
+        {
+            Id = studentId,
+            FirstName = firstName,
+            MiddleName = middleName,
+            LastName = lastName,
+            Graduated = false,
+            Group = group
+        };
+
+        return student;
+    }
+
+    public void Update(string firstName, string middleName, string lastName, Group group)
+    {
+        FirstName = firstName;
+
+        MiddleName = middleName;
+
+        LastName = lastName;
+
+        Group = group;
+    }
+
+    public void Delete()
+    {
+        Deleted = true;
+    }
 }

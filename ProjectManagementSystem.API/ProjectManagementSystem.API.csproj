@@ -21,8 +21,4 @@
     <ProjectReference Include="..\SmartCollege.RabbitMQ.Contracts\SmartCollege.RabbitMQ.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Consumers\Students\" />
-  </ItemGroup>
-
 </Project>

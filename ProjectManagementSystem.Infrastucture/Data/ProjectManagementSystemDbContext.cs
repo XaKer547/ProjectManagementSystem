@@ -42,6 +42,7 @@ public class ProjectManagementSystemDbContext(DbContextOptions options) : DbCont
     }
 }
 
+#region Configuration
 file class DisciplineConfiguration : IEntityTypeConfiguration<Discipline>
 {
     public void Configure(EntityTypeBuilder<Discipline> builder)
@@ -53,3 +54,15 @@ file class DisciplineConfiguration : IEntityTypeConfiguration<Discipline>
         builder.UsePropertyAccessMode(PropertyAccessMode.Property);
     }
 }
+file class StudentConfiguration : IEntityTypeConfiguration<Student>
+{
+    public void Configure(EntityTypeBuilder<Student> builder)
+    {
+        builder.UsePropertyAccessMode(PropertyAccessMode.Property);
+
+        builder.Property(e => e.Id)
+            .HasConversion(e => e.Value, e => new StudentId(e))
+            .ValueGeneratedNever();
+    }
+}
+#endregion
