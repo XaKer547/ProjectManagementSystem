@@ -4,7 +4,7 @@ using ProjectManagementSystem.API.Helpers;
 using ProjectManagementSystem.API.Models;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
-using ProjectManagementSystem.Application.Commands.ProjectStagesAnswers;
+using ProjectManagementSystem.Application.Commands.ProjectStageAnswers;
 using ProjectManagementSystem.Application.Queries.Projects;
 using ProjectManagementSystem.Application.Queries.ProjectStages;
 using ProjectManagementSystem.Domain.Disciplines;

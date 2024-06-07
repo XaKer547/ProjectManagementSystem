@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using ProjectManagementSystem.API.Validators.Disciplines;
 using ProjectManagementSystem.API.Validators.Grops;
+using ProjectManagementSystem.API.Validators.Models;
 using ProjectManagementSystem.API.Validators.Projects;
 using ProjectManagementSystem.API.Validators.ProjectStages;
 using ProjectManagementSystem.API.Validators.Students;
@@ -34,5 +35,10 @@ public static class AbstractValidatorExtensions
     public static IRuleBuilderOptions<T, ProjectStageId> Exists<T>(this IRuleBuilder<T, ProjectStageId> ruleBuilder, ProjectManagementSystemDbContext context)
     {
         return ruleBuilder.SetValidator(new ProjectStageExistsValidator(context));
+    }
+    public static IRuleBuilderOptions<T, ProjectStageBelongsToProjectDTO> BelongsToProject<T>(this IRuleBuilder<T, ProjectStageBelongsToProjectDTO> ruleBuilder, ProjectManagementSystemDbContext context)
+    {
+        return ruleBuilder.Must(x => context.ProjectStages.Where(s => s.Project.Id == x.ProjectId)
+        .Any(s => s.Id == x.ProjectStageId));
     }
 }
