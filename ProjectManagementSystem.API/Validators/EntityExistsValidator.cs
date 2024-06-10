@@ -2,7 +2,7 @@
 using ProjectManagementSystem.Infrastucture.Data;
 using SharedKernel;
 
-namespace ProjectManagementSystem.API.Validators;
+namespace ProjectManagementSystem.Infrastucture.Validators;
 
 public abstract class EntityExistsValidator<TEntityId, TEntity> : AbstractValidator<TEntityId>
     where TEntityId : EntityId

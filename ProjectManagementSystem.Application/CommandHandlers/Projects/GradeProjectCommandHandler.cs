@@ -19,7 +19,7 @@ public class GradeProjectCommandHandler(IUnitOfWork unitOfWork, IValidator<Grade
 
         var project = unitOfWork.Repository.Projects.Single(p => p.Id == request.ProjectId);
 
-        var mark = ProjectMark.Create(student, project, request.Grade);
+        var mark = ProjectMark.Create(project, student, request.Grade);
 
         unitOfWork.Repository.AddEntity(mark);
 

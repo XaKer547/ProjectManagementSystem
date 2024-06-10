@@ -21,8 +21,6 @@ public sealed class GetProjectStagesQueryHandler(IUnitOfWork unitOfWork, IValida
             Name = p.Name,
             Description = p.Description,
             Deadline = p.Deadline,
-            //PinnedFiles = p.PinnedFiles,
-          //StudentWork = p
         })];
 
         return projectStages;

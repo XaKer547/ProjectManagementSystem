@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using ProjectManagementSystem.API.Helpers;
+using ProjectManagementSystem.Infrastucture.Helpers;
 using ProjectManagementSystem.Application.Queries.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
 
-namespace ProjectManagementSystem.API.Validators.ProjectStages;
+namespace ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
 
 public class GetProjectStagesQueryValidator : AbstractValidator<GetProjectStagesQuery>
 {

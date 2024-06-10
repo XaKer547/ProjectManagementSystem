@@ -7,16 +7,13 @@ namespace ProjectManagementSystem.Domain.StudentProjectStages;
 
 public class StudentProjectStage : Entity<StudentProjectStageId>
 {
-    private StudentProjectStage()
+    private StudentProjectStage(ProjectStage stage, Student student)
     {
         Id = new StudentProjectStageId();
+        Stage = stage;
+        Student = student;
         Answers = [];
     }
-
-    //общие файлы           v
-    //файлы с ответами      v
-    //файлы с возвращением  v
-
     public ProjectStage Stage { get; private set; }
     public Student Student { get; private set; }
     public int Mark { get; private set; }
@@ -24,21 +21,10 @@ public class StudentProjectStage : Entity<StudentProjectStageId>
 
     public static StudentProjectStage Create(ProjectStage stage, Student student)
     {
-        var studentStage = new StudentProjectStage()
-        {
-            Stage = stage,
-            Student = student,
-        };
-
-        return studentStage;
+        return new StudentProjectStage(stage, student);
     }
     public void Graduate(int mark)
     {
         Mark = mark;
-    }
-
-    public void AddAnswer(ProjectStageAnswer answer)
-    {
-        Answers.Add(answer);
     }
 }

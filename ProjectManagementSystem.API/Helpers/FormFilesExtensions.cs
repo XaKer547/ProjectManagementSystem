@@ -1,6 +1,6 @@
 ﻿using ProjectManagementSystem.Application.Models;
 
-namespace ProjectManagementSystem.API.Helpers;
+namespace ProjectManagementSystem.Infrastucture.Helpers;
 
 public static class FormFilesExtensions
 {

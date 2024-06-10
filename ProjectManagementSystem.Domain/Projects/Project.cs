@@ -9,7 +9,19 @@ namespace ProjectManagementSystem.Domain.Projects;
 
 public sealed class Project : Entity<ProjectId>
 {
-    private Project() { }
+    private Project(string name,
+                    string subjectArea,
+                    ProjectTypes type,
+                    Discipline discipline,
+                    Group group)
+    {
+        Id = new ProjectId();
+        Name = name;
+        SubjectArea = subjectArea;
+        Type = type;
+        Discipline = discipline;
+        Group = group;
+    }
 
     public string Name { get; private set; }
     public string SubjectArea { get; private set; }
@@ -22,14 +34,7 @@ public sealed class Project : Entity<ProjectId>
 
     public static Project Create(string name, string subjectArea, ProjectTypes type, Discipline discipline, Group group)
     {
-        var project = new Project()
-        {
-            Name = name,
-            SubjectArea = subjectArea,
-            Type = type,
-            Discipline = discipline,
-            Group = group
-        };
+        var project = new Project(name, subjectArea, type, discipline, group);
 
         var projectCreatedEvent = new ProjectCreatedEvent()
         {
@@ -40,7 +45,6 @@ public sealed class Project : Entity<ProjectId>
 
         return project;
     }
-    
     public void Update(string name, string subjectArea, ProjectTypes type, Discipline discipline, Group group)
     {
         Name = name;
@@ -49,12 +53,10 @@ public sealed class Project : Entity<ProjectId>
         Discipline = discipline;
         Group = group;
     }
-
     public void Delete()
     {
         Deleted = true;
     }
-
     public void Complete()
     {
         Completed = true;

@@ -5,6 +5,6 @@ namespace ProjectManagementSystem.Application.Services;
 
 public interface IFileManager
 {
-    Task<Guid> SaveFile(ProjectStageId projectStageId, FileDTO file);
-    Task<Guid[]> SaveFiles(ProjectStageId projectStageId, IEnumerable<FileDTO> files);
+    Task<PinnedFile> SaveFile(ProjectStageId projectStageId, FileDTO file);
+    Task<PinnedFile[]> SaveFiles(ProjectStageId projectStageId, IEnumerable<FileDTO> files);
 }

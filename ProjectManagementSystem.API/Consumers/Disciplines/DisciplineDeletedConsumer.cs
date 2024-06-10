@@ -4,7 +4,7 @@ using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Disciplines;
 
-namespace ProjectManagementSystem.API.Consumers.Disciplines;
+namespace ProjectManagementSystem.Infrastucture.Consumers.Disciplines;
 
 public class DisciplineDeletedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IDisciplineDeleted>
 {
@@ -16,7 +16,10 @@ public class DisciplineDeletedConsumer(ProjectManagementSystemDbContext dbContex
 
         var disciplineId = new DisciplineId(message.Id);
 
-        var discipline = await dbContext.Disciplines.SingleAsync(d => d.Id == disciplineId);
+        var discipline = await dbContext.Disciplines.SingleOrDefaultAsync(d => d.Id == disciplineId);
+
+        if (discipline == null)
+            return;
 
         discipline.Delete();
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectManagementSystem.Infrastucture.Data;
 
-namespace ProjectManagementSystem.API.HostedServices
+namespace ProjectManagementSystem.Infrastucture.HostedServices
 {
     public class ApplyMigrationService : IHostedService
     {

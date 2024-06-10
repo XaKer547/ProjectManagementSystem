@@ -7,6 +7,7 @@ namespace ProjectManagementSystem.Application.CommandHandlers.Projects;
 
 public class CompleteProjectCommandHandler(IUnitOfWork unitOfWork, IValidator<CompleteProjectCommand> validator) : IRequestHandler<CompleteProjectCommand>
 {
+    //TODO: А где нижнее подчеркивание в наименовании переменных
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IValidator<CompleteProjectCommand> validator = validator;
 

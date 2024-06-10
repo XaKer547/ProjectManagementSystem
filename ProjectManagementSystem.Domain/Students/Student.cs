@@ -5,8 +5,18 @@ namespace ProjectManagementSystem.Domain.Students;
 
 public sealed class Student : Entity<StudentId>
 {
-    private Student()
-    { }
+    private Student(StudentId id,
+                    string firstName,
+                    string middleName,
+                    string lastName,
+                    Group group)
+    {
+        Id = id;
+        FirstName = firstName;
+        MiddleName = middleName;
+        LastName = lastName;
+        Group = group;
+    }
 
     public string FirstName { get; private set; }
     public string MiddleName { get; private set; }
@@ -14,21 +24,10 @@ public sealed class Student : Entity<StudentId>
     public bool Graduated { get; private set; }
     public Group Group { get; private set; }
 
-    public static Student Create(StudentId studentId, string firstName, string middleName, string lastName, Group group)
+    public static Student Create(StudentId id, string firstName, string middleName, string lastName, Group group)
     {
-        var student = new Student()
-        {
-            Id = studentId,
-            FirstName = firstName,
-            MiddleName = middleName,
-            LastName = lastName,
-            Graduated = false,
-            Group = group
-        };
-
-        return student;
+        return new Student(id, firstName, middleName, lastName, group);
     }
-
     public void Update(string firstName, string middleName, string lastName, Group group)
     {
         FirstName = firstName;
@@ -39,7 +38,6 @@ public sealed class Student : Entity<StudentId>
 
         Group = group;
     }
-
     public void Delete()
     {
         Deleted = true;

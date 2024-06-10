@@ -15,6 +15,7 @@ public interface IProjectManagementSystemRepository
     IQueryable<Student> Students { get; }
     IQueryable<Discipline> Disciplines { get; }
     IQueryable<Group> Groups { get; }
+    IQueryable<PinnedFile> PinnedFiles { get; }
 
     public void AddEntity<TEntity>(TEntity entity) where TEntity : class;
     public void UpdateEntity<TEntity>(TEntity entity) where TEntity : class;

@@ -2,14 +2,16 @@ using FluentValidation;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using ProjectManagementSystem.API.HostedServices;
-using ProjectManagementSystem.API.SchemaFilters;
-using ProjectManagementSystem.API.Validators.Behaviors;
+using ProjectManagementSystem.Infrastucture.HostedServices;
+using ProjectManagementSystem.Infrastucture.SchemaFilters;
+using ProjectManagementSystem.Infrastucture.Validators.Behaviors;
 using ProjectManagementSystem.Domain.Services;
 using ProjectManagementSystem.Infrastucture.Data;
 using ProjectManagementSystem.Infrastucture.Data.UnitOfWork;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using ProjectManagementSystem.Application.Services;
+using ProjectManagementSystem.Infrastucture.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +54,8 @@ builder.Services.AddScoped<IProjectManagementSystemRepository, ProjectManagement
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddScoped<IFileManager, FileManager>();
+
 builder.Services.AddHostedService<ApplyMigrationService>();
 
 builder.Services.AddSwaggerGen(options =>
@@ -71,8 +75,6 @@ builder.Services.AddSwaggerGen(options =>
 
     options.SchemaFilter<EnumTypesSchemaFilter>(xmlPath);
 });
-
-
 
 var app = builder.Build();
 

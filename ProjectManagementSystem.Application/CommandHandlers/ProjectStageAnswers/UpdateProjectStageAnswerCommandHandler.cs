@@ -3,7 +3,6 @@ using MediatR;
 using ProjectManagementSystem.Application.Commands.ProjectStageAnswers;
 using ProjectManagementSystem.Application.Services;
 using ProjectManagementSystem.Domain.ProjectStageAnswers;
-using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.Services;
 
 namespace ProjectManagementSystem.Application.CommandHandlers.ProjectStageAnswers;
@@ -28,13 +27,11 @@ public sealed class UpdateProjectStageAnswerCommandHandler(IUnitOfWork unitOfWor
 
         var stage = projectStage.Stage;
 
-        var pinnedFileId = await fileManager.SaveFile(projectStage.Id, request.PinnedFile);
-
-        var pinnedFile = unitOfWork.Repository.PinnedFiles.Single(p => p.Id == pinnedFileId);
+        var pinnedFile = await fileManager.SaveFile(projectStage.Id, request.PinnedFile);
 
         var answer = ProjectStageAnswer.Create(pinnedFile);
 
-        stage.AddAnswer(answer);
+        stage.Answers.Add(answer);
 
         unitOfWork.Repository.UpdateEntity(stage);
 

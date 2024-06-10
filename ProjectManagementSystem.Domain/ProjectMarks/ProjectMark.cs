@@ -6,25 +6,20 @@ namespace ProjectManagementSystem.Domain.ProjectMarks;
 
 public sealed class ProjectMark : Entity<ProjectMarkId>
 {
-    private ProjectMark()
+    private ProjectMark(Project project, Student student, int value)
     {
         Id = new ProjectMarkId();
+        Project = project;
+        Student = student;
+        Value = value;
     }
 
     public Project Project { get; private set; }
     public Student Student { get; private set; }
-
     public int Value { get; private set; }
 
-    public static ProjectMark Create(Student student, Project project, int grade)
+    public static ProjectMark Create(Project project, Student student, int grade)
     {
-        var mark = new ProjectMark()
-        {
-            Student = student,
-            Project = project,
-            Value = grade,
-        };
-
-        return mark;
+        return new ProjectMark(project, student, grade);
     }
 }

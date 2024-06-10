@@ -3,7 +3,7 @@ using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Groups;
 
-namespace ProjectManagementSystem.API.Consumers.Groups;
+namespace ProjectManagementSystem.Infrastucture.Consumers.Groups;
 
 public class GroupCreatedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IGroupCreated>
 {
