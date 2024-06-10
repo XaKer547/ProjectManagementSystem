@@ -5,12 +5,10 @@ using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.ProjectMarks;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStageAnswers;
-using ProjectManagementSystem.Domain.ProjectStageMarks;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.Services;
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
-using SharedKernel;
 
 namespace ProjectManagementSystem.Infrastucture.Data;
 
@@ -21,6 +19,7 @@ public class ProjectManagementSystemDbContext(DbContextOptions options) : DbCont
     public IQueryable<Student> Students => Set<Student>();
     public IQueryable<Discipline> Disciplines => Set<Discipline>();
     public IQueryable<Group> Groups => Set<Group>();
+    public IQueryable<StudentProjectStage> StudentProjectStages => Set<StudentProjectStage>();
 
     public void AddEntity<TEntity>(TEntity entity) where TEntity : class
     {

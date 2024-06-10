@@ -1,4 +1,5 @@
-﻿using ProjectManagementSystem.Domain.ProjectStages;
+﻿using ProjectManagementSystem.Domain.ProjectStageAnswers;
+using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.Students;
 using SharedKernel;
 
@@ -9,11 +10,17 @@ public class StudentProjectStage : Entity<StudentProjectStageId>
     private StudentProjectStage()
     {
         Id = new StudentProjectStageId();
+        Answers = [];
     }
+
+    //общие файлы           v
+    //файлы с ответами      v
+    //файлы с возвращением  v
 
     public ProjectStage Stage { get; private set; }
     public Student Student { get; private set; }
     public int Mark { get; private set; }
+    public List<ProjectStageAnswer> Answers { get; private set; }
 
     public static StudentProjectStage Create(ProjectStage stage, Student student)
     {
@@ -28,5 +35,10 @@ public class StudentProjectStage : Entity<StudentProjectStageId>
     public void Graduate(int mark)
     {
         Mark = mark;
+    }
+
+    public void AddAnswer(ProjectStageAnswer answer)
+    {
+        Answers.Add(answer);
     }
 }

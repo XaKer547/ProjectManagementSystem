@@ -1,6 +1,6 @@
-﻿namespace ProjectManagementSystem.Application.CommandHandlers.ProjectStageAnswers
+﻿namespace ProjectManagementSystem.Application.CommandHandlers.ProjectStageAnswers;
+
+public class CreateProjectStageAnswerCommandHandler
 {
-    internal class CreateProjectStageAnswerCommandHandler
-    {
-    }
+
 }

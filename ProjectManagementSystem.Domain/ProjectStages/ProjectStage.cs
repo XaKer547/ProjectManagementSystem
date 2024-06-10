@@ -1,5 +1,4 @@
 ﻿using ProjectManagementSystem.Domain.Projects;
-using ProjectManagementSystem.Domain.Students;
 using SharedKernel;
 
 namespace ProjectManagementSystem.Domain.ProjectStages;
@@ -11,10 +10,9 @@ public sealed class ProjectStage : Entity<ProjectStageId>
     public string Description { get; private set; }
     public DateTime Deadline { get; private set; }
     public PinnedFile[]? PinnedFiles { get; private set; }
-    public Student Student { get; private set; }
     public Project Project { get; private set; }
 
-    public static ProjectStage Create(Student student, string name, string description, DateTime deadline, PinnedFile[]? pinnedFiles)
+    public static ProjectStage Create(string name, string description, DateTime deadline, PinnedFile[]? pinnedFiles)
     {
         var stage = new ProjectStage()
         {
@@ -22,7 +20,6 @@ public sealed class ProjectStage : Entity<ProjectStageId>
             Description = description,
             Deadline = deadline,
             PinnedFiles = pinnedFiles,
-            Student = student,
         };
 
         return stage;
