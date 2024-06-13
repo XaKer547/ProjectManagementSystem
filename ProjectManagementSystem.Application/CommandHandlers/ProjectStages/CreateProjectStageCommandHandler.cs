@@ -1,36 +1,58 @@
 ﻿using FluentValidation;
 using MediatR;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
+using ProjectManagementSystem.Application.Services;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.Services;
+using ProjectManagementSystem.Domain.StudentProjectStages;
 
 namespace ProjectManagementSystem.Application.CommandHandlers.ProjectStages;
 
-public sealed class CreateProjectStageCommandHandler(IUnitOfWork unitOfWork, IValidator<CreateProjectStageCommand> validator) : IRequestHandler<CreateProjectStageCommand, ProjectStageId>
+public sealed class CreateProjectStageCommandHandler(IUnitOfWork unitOfWork, IFileManager fileManager, IValidator<CreateProjectStageCommand> validator) : IRequestHandler<CreateProjectStageCommand, ProjectStageId>
 {
     private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IFileManager fileManager = fileManager;
     private readonly IValidator<CreateProjectStageCommand> validator = validator;
 
     public async Task<ProjectStageId> Handle(CreateProjectStageCommand request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var project = unitOfWork.Repository.Projects.Single(p => p.Id == request.ProjectId);
+        var projectGroup = unitOfWork.Repository.Projects.Select(p => new
+        {
+            Project = p,
+            p.Group,
+        }).Single(p => p.Project.Id == request.ProjectId);
 
-        //project.Stages.Add();
+        var project = projectGroup.Project;
 
-        //var students = unitOfWork.Repository.Students.Where(s => s.);
+        var stage = ProjectStage.Create(request.Name, request.Description, request.Deadline, null);
 
-        //var projectStage = ProjectStage.Create(null, request.Name, request.Description, request.Deadline, request.PinnedFiles);
+        if (request.PinnedFiles is not null)
+        {
+            var pinnedFiles = await fileManager.SaveFiles(stage.Id, request.PinnedFiles);
 
-        //project.Stages.Add(projectStage);
+            stage.UpdatePinnedFiles(pinnedFiles);
+        }
 
-        //unitOfWork.Repository.UpdateEntity(project);
+        project.Stages.Add(stage);
 
-        //await unitOfWork.SaveChangesAsync(cancellationToken);
+        var group = projectGroup.Group;
 
-        //return projectStage.Id;
+        var students = unitOfWork.Repository.Students.Where(s => s.Group == group)
+            .AsEnumerable();
 
-        return null;
+        foreach (var student in students)
+        {
+            var studentStage = StudentProjectStage.Create(stage, student);
+
+            unitOfWork.Repository.AddEntity(studentStage);
+        }
+
+        unitOfWork.Repository.UpdateEntity(project);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return stage.Id;
     }
 }

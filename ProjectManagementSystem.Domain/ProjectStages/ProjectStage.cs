@@ -38,4 +38,8 @@ public sealed class ProjectStage : Entity<ProjectStageId>
     {
         Deleted = true;
     }
+    public void UpdatePinnedFiles(PinnedFile[] pinnedFiles)
+    {
+        PinnedFiles = pinnedFiles;
+    }
 }

@@ -14,8 +14,12 @@ public sealed class DeleteProjectStageCommandHandler(IUnitOfWork unitOfWork, IVa
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var projectStage = unitOfWork.Repository.ProjectStages.Single(p => p.Id == request.ProjectStageId);
+        var stage = unitOfWork.Repository.ProjectStages.Single(p => p.Id == request.ProjectStageId);
 
-        projectStage.Delete();
+        stage.Delete();
+
+        unitOfWork.Repository.UpdateEntity(stage);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
