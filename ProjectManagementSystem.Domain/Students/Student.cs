@@ -17,6 +17,8 @@ public sealed class Student : Entity<StudentId>
         LastName = lastName;
         Group = group;
     }
+    private Student()
+    { }
 
     public string FirstName { get; private set; }
     public string MiddleName { get; private set; }

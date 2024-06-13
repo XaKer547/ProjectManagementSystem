@@ -6,7 +6,7 @@ using ProjectManagementSystem.Domain.Services;
 
 namespace ProjectManagementSystem.Application.CommandHandlers.ProjectStages;
 
-public sealed class CreateProjectStageCommandValidator(IUnitOfWork unitOfWork, IValidator<CreateProjectStageCommand> validator) : IRequestHandler<CreateProjectStageCommand, ProjectStageId>
+public sealed class CreateProjectStageCommandHandler(IUnitOfWork unitOfWork, IValidator<CreateProjectStageCommand> validator) : IRequestHandler<CreateProjectStageCommand, ProjectStageId>
 {
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IValidator<CreateProjectStageCommand> validator = validator;
@@ -16,6 +16,8 @@ public sealed class CreateProjectStageCommandValidator(IUnitOfWork unitOfWork, I
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
         var project = unitOfWork.Repository.Projects.Single(p => p.Id == request.ProjectId);
+
+        //project.Stages.Add();
 
         //var students = unitOfWork.Repository.Students.Where(s => s.);
 

@@ -18,7 +18,7 @@ public class ProjectManagementSystemDbContext(DbContextOptions options) : DbCont
     public IQueryable<Discipline> Disciplines => Set<Discipline>();
     public IQueryable<Group> Groups => Set<Group>();
     public IQueryable<StudentProjectStage> StudentProjectStages => Set<StudentProjectStage>();
-    public IQueryable<PinnedFile> PinnedFiles => Set<PinnedFile>();
+    //public IQueryable<PinnedFile> PinnedFiles => Set<PinnedFile>();
 
     public void AddEntity<TEntity>(TEntity entity) where TEntity : class
     {

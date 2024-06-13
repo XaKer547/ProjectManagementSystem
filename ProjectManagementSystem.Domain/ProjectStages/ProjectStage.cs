@@ -5,25 +5,27 @@ namespace ProjectManagementSystem.Domain.ProjectStages;
 
 public sealed class ProjectStage : Entity<ProjectStageId>
 {
-    private ProjectStage(string name, string description, DateTime deadline, PinnedFile[]? pinnedFiles, Project project)
+    private ProjectStage(string name, string description, DateTime deadline, PinnedFile[]? pinnedFiles)
     {
         Id = new ProjectStageId();
         Name = name;
         Description = description;
         Deadline = deadline;
         PinnedFiles = pinnedFiles;
-        Project = project;
     }
+
+    private ProjectStage()
+    { }
 
     public string Name { get; private set; }
     public string Description { get; private set; }
     public DateTime Deadline { get; private set; }
-    public PinnedFile[]? PinnedFiles { get; private set; }
     public Project Project { get; private set; }
+    public PinnedFile[]? PinnedFiles { get; private set; }
 
-    public static ProjectStage Create(string name, string description, DateTime deadline, PinnedFile[]? pinnedFiles, Project project)
+    public static ProjectStage Create(string name, string description, DateTime deadline, PinnedFile[]? pinnedFiles)
     {
-        return new ProjectStage(name, description, deadline, pinnedFiles, project);
+        return new ProjectStage(name, description, deadline, pinnedFiles);
     }
     public void Update(string name, string description, DateTime deadline, PinnedFile[] pinnedFiles)
     {

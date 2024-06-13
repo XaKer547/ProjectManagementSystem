@@ -14,6 +14,9 @@ public class StudentProjectStage : Entity<StudentProjectStageId>
         Student = student;
         Answers = [];
     }
+    private StudentProjectStage()
+    { }
+
     public ProjectStage Stage { get; private set; }
     public Student Student { get; private set; }
     public int Mark { get; private set; }

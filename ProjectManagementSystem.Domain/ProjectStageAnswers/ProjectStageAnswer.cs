@@ -5,6 +5,9 @@ namespace ProjectManagementSystem.Domain.ProjectStageAnswers;
 
 public sealed class ProjectStageAnswer : Entity<ProjectStageAnswerId>
 {
+    private ProjectStageAnswer()
+    { }
+
     private ProjectStageAnswer(PinnedFile answer)
     {
         Id = new ProjectStageAnswerId();

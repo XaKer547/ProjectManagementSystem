@@ -2,6 +2,7 @@
 using ProjectManagementSystem.Infrastucture.Helpers;
 using ProjectManagementSystem.Application.Queries.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
+using ProjectManagementSystem.Infrastucture.Validators.Models;
 
 namespace ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
 
@@ -9,10 +10,11 @@ public class GetProjectStageQueryValidator : AbstractValidator<GetProjectStageQu
 {
     public GetProjectStageQueryValidator(ProjectManagementSystemDbContext context)
     {
-        RuleFor(x => x.ProjectId)
-            .Exists(context);
-
-        RuleFor(x => x.ProjectStageId)
-            .Exists(context);
+        RuleFor(x => new ProjectStageBelongsToProjectDTO()
+        {
+            ProjectId = x.ProjectId,
+            ProjectStageId = x.ProjectStageId
+        })
+            .BelongsToProject(context);
     }
 }

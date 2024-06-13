@@ -23,6 +23,10 @@ public sealed class Project : Entity<ProjectId>
         Group = group;
     }
 
+    private Project()
+    { }
+
+
     public string Name { get; private set; }
     public string SubjectArea { get; private set; }
     public ProjectTypes Type { get; private set; }

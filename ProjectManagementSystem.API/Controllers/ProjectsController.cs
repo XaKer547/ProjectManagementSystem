@@ -269,7 +269,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var query = new GetProjectStageQuery()
         {
             ProjectId = new ProjectId(projectId),
-            ProjectStageId = new ProjectStageId(stageId)
+            ProjectStageId = new StudentProjectStageId(stageId)
         };
 
         var stage = await mediator.Send(query);

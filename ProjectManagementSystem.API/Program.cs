@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using ProjectManagementSystem.Application.Services;
 using ProjectManagementSystem.Infrastucture.Services;
+using ProjectManagementSystem.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,6 +88,8 @@ app.UseReDoc(options =>
     options.DocumentTitle = "Project management system v1";
     options.SpecUrl = "/swagger/v1/swagger.json";
 });
+
+app.UseMiddleware<ValidationExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
