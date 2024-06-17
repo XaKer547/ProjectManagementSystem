@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  pms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5179:80"
+      - "7036:443"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Port=5432;Database=POSTGRES_DB;User Id=POSTGRES_USER;Password=POSTGRES_PASSWORD;
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_DB=ProjectManagementSystem
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=qwegjghj01
+    volumes:
+      - postgres_/var/lib/postgresql/data
