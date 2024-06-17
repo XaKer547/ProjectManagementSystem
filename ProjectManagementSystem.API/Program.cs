@@ -2,17 +2,17 @@ using FluentValidation;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using ProjectManagementSystem.Infrastucture.HostedServices;
-using ProjectManagementSystem.Infrastucture.SchemaFilters;
-using ProjectManagementSystem.Infrastucture.Validators.Behaviors;
+using ProjectManagementSystem.API.Middlewares;
+using ProjectManagementSystem.Application.Services;
 using ProjectManagementSystem.Domain.Services;
 using ProjectManagementSystem.Infrastucture.Data;
 using ProjectManagementSystem.Infrastucture.Data.UnitOfWork;
+using ProjectManagementSystem.Infrastucture.HostedServices;
+using ProjectManagementSystem.Infrastucture.SchemaFilters;
+using ProjectManagementSystem.Infrastucture.Services;
+using ProjectManagementSystem.Infrastucture.Validators.Behaviors;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using ProjectManagementSystem.Application.Services;
-using ProjectManagementSystem.Infrastucture.Services;
-using ProjectManagementSystem.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 

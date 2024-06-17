@@ -1,16 +1,16 @@
 ﻿using FluentValidation;
-using ProjectManagementSystem.Infrastucture.Validators.Disciplines;
-using ProjectManagementSystem.Infrastucture.Validators.Grops;
-using ProjectManagementSystem.Infrastucture.Validators.Models;
-using ProjectManagementSystem.Infrastucture.Validators.Projects;
-using ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
-using ProjectManagementSystem.Infrastucture.Validators.Students;
 using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.Students;
 using ProjectManagementSystem.Infrastucture.Data;
+using ProjectManagementSystem.Infrastucture.Validators.Disciplines;
+using ProjectManagementSystem.Infrastucture.Validators.Grops;
+using ProjectManagementSystem.Infrastucture.Validators.Models;
+using ProjectManagementSystem.Infrastucture.Validators.Projects;
+using ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
+using ProjectManagementSystem.Infrastucture.Validators.Students;
 
 namespace ProjectManagementSystem.Infrastucture.Helpers;
 

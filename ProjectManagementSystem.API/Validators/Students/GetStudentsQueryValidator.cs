@@ -1,7 +1,7 @@
-﻿using ProjectManagementSystem.Infrastucture.Helpers;
+﻿using FluentValidation;
 using ProjectManagementSystem.Application.Queries.Students;
-using FluentValidation;
 using ProjectManagementSystem.Infrastucture.Data;
+using ProjectManagementSystem.Infrastucture.Helpers;
 
 namespace ProjectManagementSystem.Infrastucture.Validators.Students;
 

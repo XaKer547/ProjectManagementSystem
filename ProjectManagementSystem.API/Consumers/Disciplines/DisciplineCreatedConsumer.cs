@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Disciplines;

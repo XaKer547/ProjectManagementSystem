@@ -1,7 +1,5 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ProjectManagementSystem.Infrastucture.Helpers;
-using ProjectManagementSystem.Infrastucture.Models;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Application.Commands.ProjectStageAnswers;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
@@ -13,9 +11,10 @@ using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
+using ProjectManagementSystem.Infrastucture.Helpers;
+using ProjectManagementSystem.Infrastucture.Models;
 using SharedKernel.DTOs.Projects;
 using SharedKernel.DTOs.ProjectStages;
-using ProjectManagementSystem.Domain.StudentProjectStages;
 
 namespace ProjectManagementSystem.Infrastucture.Controllers;
 
@@ -359,6 +358,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
     /// <param name="stageId">Идентификатор этапа работы</param>
+    /// <param name="gradeProjectStage"></param>
     /// <response code="204"></response>
     /// <response code="404">работа или этап работы не найден</response>
     [HttpPatch("{projectId}/stages/{stageId}/grade")]

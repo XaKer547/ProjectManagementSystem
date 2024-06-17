@@ -3,5 +3,5 @@
 public class ReturnStageAnswerModel
 {
     public IFormFile? File { get; }
-    public string? Remark {  get; }
+    public string? Remark { get; }
 }

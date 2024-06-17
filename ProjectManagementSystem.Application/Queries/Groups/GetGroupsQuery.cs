@@ -5,5 +5,5 @@ namespace ProjectManagementSystem.Application.Queries.Groups;
 
 public sealed record GetGroupsQuery : IRequest<IReadOnlyCollection<GroupDTO>>
 {
-    
+
 }

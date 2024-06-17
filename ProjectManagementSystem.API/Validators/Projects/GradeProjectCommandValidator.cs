@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using ProjectManagementSystem.Infrastucture.Helpers;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Infrastucture.Data;
+using ProjectManagementSystem.Infrastucture.Helpers;
 
 namespace ProjectManagementSystem.Infrastucture.Validators.Projects;
 

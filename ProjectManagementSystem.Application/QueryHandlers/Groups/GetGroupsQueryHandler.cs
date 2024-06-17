@@ -1,6 +1,6 @@
-﻿using ProjectManagementSystem.Application.Queries.Groups;
+﻿using MediatR;
+using ProjectManagementSystem.Application.Queries.Groups;
 using ProjectManagementSystem.Domain.Services;
-using MediatR;
 using SharedKernel.DTOs.Groups;
 
 namespace ProjectManagementSystem.Application.QueryHandlers.Groups;

@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using ProjectManagementSystem.Infrastucture.Validators.Models;
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Students;
 using ProjectManagementSystem.Infrastucture.Data;

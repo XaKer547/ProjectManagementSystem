@@ -1,7 +1,7 @@
-﻿using ProjectManagementSystem.Application.Queries.Groups;
-using ProjectManagementSystem.Domain.Services;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
+using ProjectManagementSystem.Application.Queries.Groups;
+using ProjectManagementSystem.Domain.Services;
 using SharedKernel.DTOs.Groups;
 
 namespace ProjectManagementSystem.Application.QueryHandlers.Groups;

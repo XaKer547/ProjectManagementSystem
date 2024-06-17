@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProjectManagementSystem.Domain.Disciplines;
+using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.ProjectMarks;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStageAnswers;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
-using ProjectManagementSystem.Domain.Groups;
 
 namespace ProjectManagementSystem.Infrastucture.Data.Configuration;
 

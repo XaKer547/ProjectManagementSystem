@@ -1,7 +1,7 @@
-﻿using ProjectManagementSystem.Application.Queries.Students;
-using ProjectManagementSystem.Domain.Services;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
+using ProjectManagementSystem.Application.Queries.Students;
+using ProjectManagementSystem.Domain.Services;
 using SharedKernel.DTOs.Students;
 
 namespace ProjectManagementSystem.Application.QueryHandlers.Students;

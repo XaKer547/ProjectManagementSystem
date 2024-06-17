@@ -14,7 +14,7 @@ public sealed class GradeProjectStageCommandHandler(IUnitOfWork unitOfWork, IVal
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var stage = unitOfWork.Repository.StudentProjectStages.Single(s=>s.Id == request.ProjectStageId);
+        var stage = unitOfWork.Repository.StudentProjectStages.Single(s => s.Id == request.ProjectStageId);
 
         stage.Graduate(request.Grade);
 
