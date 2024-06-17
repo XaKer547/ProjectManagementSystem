@@ -5,12 +5,10 @@ using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.ProjectMarks;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStageAnswers;
-using ProjectManagementSystem.Domain.ProjectStageMarks;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.Services;
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
-using SharedKernel;
 
 namespace ProjectManagementSystem.Infrastucture.Data;
 
@@ -21,6 +19,7 @@ public class ProjectManagementSystemDbContext(DbContextOptions options) : DbCont
     public IQueryable<Student> Students => Set<Student>();
     public IQueryable<Discipline> Disciplines => Set<Discipline>();
     public IQueryable<Group> Groups => Set<Group>();
+    public IQueryable<StudentProjectStage> StudentProjectStages => Set<StudentProjectStage>();
 
     public void AddEntity<TEntity>(TEntity entity) where TEntity : class
     {
@@ -46,8 +45,6 @@ public class ProjectManagementSystemDbContext(DbContextOptions options) : DbCont
         modelBuilder.ApplyConfiguration(new ProjectConfiguration());
 
         modelBuilder.ApplyConfiguration(new ProjectStageConfiguration());
-
-        modelBuilder.ApplyConfiguration(new ProjectStageMarkConfiguration());
 
         modelBuilder.ApplyConfiguration(new ProjectStageAnswerConfiguration());
 
@@ -76,16 +73,6 @@ file class ProjectStageConfiguration : IEntityTypeConfiguration<ProjectStage>
 
         builder.Property(e => e.Id)
             .HasConversion(e => e.Value, e => new ProjectStageId(e));
-    }
-}
-file class ProjectStageMarkConfiguration : IEntityTypeConfiguration<ProjectStageMark>
-{
-    public void Configure(EntityTypeBuilder<ProjectStageMark> builder)
-    {
-        builder.UsePropertyAccessMode(PropertyAccessMode.Property);
-
-        builder.Property(e => e.Id)
-            .HasConversion(e => e.Value, e => new ProjectStageMarkId(e));
     }
 }
 file class ProjectStageAnswerConfiguration : IEntityTypeConfiguration<ProjectStageAnswer>

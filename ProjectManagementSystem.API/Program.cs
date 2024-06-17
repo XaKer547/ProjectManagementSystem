@@ -31,8 +31,20 @@ builder.Services.AddMediatR(m =>
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder => builder
+        .WithOrigins("https://localhost:7096")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .SetIsOriginAllowed((host) => true));
+});
+
 builder.Services.AddMassTransit(options =>
 {
+    options.AddConsumers(typeof(Program).Assembly);
+
     options.UsingRabbitMq((context, conf) =>
     {
         conf.Host("localhost", 5672, "/", c =>
@@ -90,8 +102,12 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseCors();
+
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers()
+    .RequireCors();
+
 
 app.Run();

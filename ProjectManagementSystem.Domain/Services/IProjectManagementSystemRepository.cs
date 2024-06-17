@@ -2,6 +2,7 @@
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
+using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
 
 namespace ProjectManagementSystem.Domain.Services;
@@ -13,6 +14,7 @@ public interface IProjectManagementSystemRepository
     IQueryable<Student> Students { get; }
     IQueryable<Discipline> Disciplines { get; }
     IQueryable<Group> Groups { get; }
+    IQueryable<StudentProjectStage> StudentProjectStages { get; }
 
     public void AddEntity<TEntity>(TEntity entity) where TEntity : class;
     public void UpdateEntity<TEntity>(TEntity entity) where TEntity : class;

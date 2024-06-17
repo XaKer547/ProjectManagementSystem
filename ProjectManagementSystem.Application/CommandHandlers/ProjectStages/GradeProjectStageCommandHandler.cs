@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
-using ProjectManagementSystem.Domain.ProjectStageMarks;
 using ProjectManagementSystem.Domain.Services;
 
 namespace ProjectManagementSystem.Application.CommandHandlers.ProjectStages;
@@ -15,13 +14,11 @@ public sealed class GradeProjectStageCommandHandler(IUnitOfWork unitOfWork, IVal
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var student = unitOfWork.Repository.Students.Single(s => s.Id == request.StudentId);
+        var stage = unitOfWork.Repository.StudentProjectStages.Single(s=>s.Id == request.ProjectStageId);
 
-        var projectStage = unitOfWork.Repository.ProjectStages.Single(p => p.Id == request.ProjectStageId);
+        stage.Graduate(request.Grade);
 
-        var mark = ProjectStageMark.Create(student, projectStage, request.Grade);
-
-        unitOfWork.Repository.AddEntity(mark);
+        unitOfWork.Repository.UpdateEntity(stage);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

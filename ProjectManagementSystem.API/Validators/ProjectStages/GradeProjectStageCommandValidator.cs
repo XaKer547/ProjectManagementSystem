@@ -13,12 +13,12 @@ public class GradeProjectStageCommandValidator : AbstractValidator<GradeProjectS
         RuleFor(x => x.ProjectId)
             .Exists(context);
 
-        RuleFor(x => new ProjectStageBelongsToProjectDTO()
-        {
-            ProjectStageId = x.ProjectStageId,
-            ProjectId = x.ProjectId,
-        })
-            .BelongsToProject(context);
+        //RuleFor(x => new ProjectStageBelongsToProjectDTO()
+        //{
+        //    ProjectStageId = x.ProjectStageId,
+        //    ProjectId = x.ProjectId,
+        //})
+        //    .BelongsToProject(context);
 
         RuleFor(x => x.Grade)
             .InclusiveBetween(2, 5);

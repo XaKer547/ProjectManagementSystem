@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectManagementSystem.API.Helpers;
 using ProjectManagementSystem.API.Models;
 using ProjectManagementSystem.Application.Commands.Projects;
-using ProjectManagementSystem.Application.Commands.ProjectStages;
 using ProjectManagementSystem.Application.Commands.ProjectStageAnswers;
+using ProjectManagementSystem.Application.Commands.ProjectStages;
 using ProjectManagementSystem.Application.Queries.Projects;
 using ProjectManagementSystem.Application.Queries.ProjectStages;
 using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
+using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
 using SharedKernel.DTOs.Projects;
 using SharedKernel.DTOs.ProjectStages;
@@ -368,7 +369,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         {
             ProjectId = new ProjectId(projectId),
             StudentId = new StudentId(gradeProjectStage.StudentId),
-            ProjectStageId = new ProjectStageId(stageId),
+            ProjectStageId = new StudentProjectStageId(stageId),
             Grade = gradeProjectStage.Grade,
         };
 
