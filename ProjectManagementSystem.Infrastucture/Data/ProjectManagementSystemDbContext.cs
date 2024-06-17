@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Domain.Groups;
-using ProjectManagementSystem.Domain.ProjectMarks;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStageAnswers;
 using ProjectManagementSystem.Domain.ProjectStages;
@@ -47,8 +45,6 @@ public class ProjectManagementSystemDbContext(DbContextOptions options) : DbCont
         modelBuilder.ApplyConfiguration(new ProjectStageConfiguration());
 
         modelBuilder.ApplyConfiguration(new ProjectStageAnswerConfiguration());
-
-        modelBuilder.ApplyConfiguration(new StudentProjectStageConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

@@ -17,6 +17,7 @@ public sealed class GetProjectsQueryHandler(IUnitOfWork unitOfWork) : IRequestHa
             Id = p.Id.Value,
             Name = p.Name,
             SubjectArea = p.SubjectArea,
+            //TODO: Тут упадет (Вроде)
             ProjectType = p.Type.GetDisplayName()!,
             ProjectTypeId = (int)p.Type,
             DisciplineId = p.Discipline.Id.Value,

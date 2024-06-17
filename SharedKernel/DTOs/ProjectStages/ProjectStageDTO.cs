@@ -1,4 +1,6 @@
-﻿namespace SharedKernel.DTOs.ProjectStages;
+﻿using SharedKernel.DTOs.ProjectStageAnswers;
+
+namespace SharedKernel.DTOs.ProjectStages;
 
 public sealed record ProjectStageDTO
 {
@@ -6,7 +8,5 @@ public sealed record ProjectStageDTO
     public string Name { get; init; }
     public string Description { get; init; }
     public DateTime Deadline { get; init; }
-    public string[]? PinnedFiles { get; init; } //TODO: посмотрим что он ответит
-    public string? StudentWork { get; init; }
-    public string Remark { get; init; }
+    public ProjectStageAnswerDTO[] Answers { get; init; }
 }

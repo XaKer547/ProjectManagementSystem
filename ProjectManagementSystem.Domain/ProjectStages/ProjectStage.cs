@@ -1,31 +1,31 @@
 ﻿using ProjectManagementSystem.Domain.Projects;
-using ProjectManagementSystem.Domain.Students;
 using SharedKernel;
 
 namespace ProjectManagementSystem.Domain.ProjectStages;
 
 public sealed class ProjectStage : Entity<ProjectStageId>
 {
-    private ProjectStage() { }
+    private ProjectStage(string name, string description, DateTime deadline, PinnedFile[]? pinnedFiles)
+    {
+        Id = new ProjectStageId();
+        Name = name;
+        Description = description;
+        Deadline = deadline;
+        PinnedFiles = pinnedFiles;
+    }
+
+    private ProjectStage()
+    { }
+
     public string Name { get; private set; }
     public string Description { get; private set; }
     public DateTime Deadline { get; private set; }
-    public PinnedFile[]? PinnedFiles { get; private set; }
-    public Student Student { get; private set; }
     public Project Project { get; private set; }
+    public PinnedFile[]? PinnedFiles { get; private set; }
 
-    public static ProjectStage Create(Student student, string name, string description, DateTime deadline, PinnedFile[]? pinnedFiles)
+    public static ProjectStage Create(string name, string description, DateTime deadline, PinnedFile[]? pinnedFiles)
     {
-        var stage = new ProjectStage()
-        {
-            Name = name,
-            Description = description,
-            Deadline = deadline,
-            PinnedFiles = pinnedFiles,
-            Student = student,
-        };
-
-        return stage;
+        return new ProjectStage(name, description, deadline, pinnedFiles);
     }
     public void Update(string name, string description, DateTime deadline, PinnedFile[] pinnedFiles)
     {
@@ -38,33 +38,8 @@ public sealed class ProjectStage : Entity<ProjectStageId>
     {
         Deleted = true;
     }
-}
-
-public class PinnedFile
-{
-    private PinnedFile()
+    public void UpdatePinnedFiles(PinnedFile[] pinnedFiles)
     {
-        Id = Guid.NewGuid();
-    }
-    public Guid Id { get; private set; }
-    public string Name { get; private set; }
-    public string ProjectName { get; private set; }
-    public string ProjectStageName { get; private set; }
-
-    public static PinnedFile Create(string projectName, string projectStageName, string name)
-    {
-        var file = new PinnedFile()
-        {
-            Name = name,
-            ProjectName = projectName,
-            ProjectStageName = projectStageName,
-        };
-
-        return file;
-    }
-
-    public string GetPath()
-    {
-        return Path.Combine(Id.ToString(), ProjectName, ProjectStageName);
+        PinnedFiles = pinnedFiles;
     }
 }

@@ -4,25 +4,21 @@ namespace ProjectManagementSystem.Domain.Groups;
 
 public sealed class Group : Entity<GroupId>
 {
-    private Group() { }
+    private Group(GroupId id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
     public string Name { get; private set; }
 
-    public static Group Create(GroupId groupId, string name)
+    public static Group Create(GroupId id, string name)
     {
-        var group = new Group()
-        {
-            Id = groupId,
-            Name = name
-        };
-
-        return group;
+        return new Group(id, name);
     }
-
     public void Delete()
     {
         Deleted = true;
     }
-
     public void Update(string name)
     {
         Name = name;

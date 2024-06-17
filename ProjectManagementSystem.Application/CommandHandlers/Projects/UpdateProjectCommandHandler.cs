@@ -20,7 +20,11 @@ public sealed class UpdateProjectCommandHandler(IUnitOfWork unitOfWork, IValidat
 
         var group = unitOfWork.Repository.Groups.SingleOrDefault(g => g.Id == request.GroupId);
 
-        project.Update(request.Name ?? project.Name, request.SubjectArea ?? project.SubjectArea, request.ProjectType ?? project.Type, discipline ?? project.Discipline, group ?? project.Group);
+        project.Update(request.Name ?? project.Name,
+            request.SubjectArea ?? project.SubjectArea,
+            request.ProjectType ?? project.Type,
+            discipline ?? project.Discipline,
+            group ?? project.Group);
 
         unitOfWork.Repository.UpdateEntity(project);
 

@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using ProjectManagementSystem.API.Helpers;
-using ProjectManagementSystem.API.Validators.Models;
+using ProjectManagementSystem.Infrastucture.Helpers;
+using ProjectManagementSystem.Infrastucture.Validators.Models;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
 
-namespace ProjectManagementSystem.API.Validators.ProjectStages;
+namespace ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
 
 public class GradeProjectStageCommandValidator : AbstractValidator<GradeProjectStageCommand>
 {

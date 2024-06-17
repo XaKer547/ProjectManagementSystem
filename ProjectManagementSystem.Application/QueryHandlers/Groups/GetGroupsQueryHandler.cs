@@ -11,7 +11,7 @@ public sealed class GetGroupsQueryHandler(IUnitOfWork unitOfWork) : IRequestHand
 
     public Task<IReadOnlyCollection<GroupDTO>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
     {
-        IReadOnlyCollection<GroupDTO> groups = [.. unitOfWork.Repository .Groups.Select(g => new GroupDTO
+        IReadOnlyCollection<GroupDTO> groups = [.. unitOfWork.Repository.Groups.Select(g => new GroupDTO
         {
             Id = g.Id.Value,
             Name = g.Name,

@@ -1,18 +1,20 @@
 ﻿using FluentValidation;
-using ProjectManagementSystem.API.Helpers;
+using ProjectManagementSystem.Infrastucture.Helpers;
 using ProjectManagementSystem.Application.Queries.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
+using ProjectManagementSystem.Infrastucture.Validators.Models;
 
-namespace ProjectManagementSystem.API.Validators.ProjectStages;
+namespace ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
 
 public class GetProjectStageQueryValidator : AbstractValidator<GetProjectStageQuery>
 {
     public GetProjectStageQueryValidator(ProjectManagementSystemDbContext context)
     {
-        RuleFor(x => x.ProjectId)
-            .Exists(context);
-
-        RuleFor(x => x.ProjectStageId)
-            .Exists(context);
+        RuleFor(x => new ProjectStageBelongsToProjectDTO()
+        {
+            ProjectId = x.ProjectId,
+            ProjectStageId = x.ProjectStageId
+        })
+            .BelongsToProject(context);
     }
 }

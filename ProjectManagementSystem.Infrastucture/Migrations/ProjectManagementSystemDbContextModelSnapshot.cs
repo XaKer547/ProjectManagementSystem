@@ -61,12 +61,14 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("AdditionalResponseFilesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AnswerId")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
-
-                    b.Property<string[]>("Files")
-                        .IsRequired()
-                        .HasColumnType("text[]");
 
                     b.Property<string>("Remark")
                         .HasColumnType("text");
@@ -74,30 +76,18 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                     b.Property<bool>("Returned")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid?>("StudentProjectStageId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("AdditionalResponseFilesId");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("StudentProjectStageId");
 
                     b.ToTable("ProjectStageAnswer");
-                });
-
-            modelBuilder.Entity("ProjectManagementSystem.Domain.ProjectStageMarks.ProjectStageMark", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("Mark")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProjectStageMark");
                 });
 
             modelBuilder.Entity("ProjectManagementSystem.Domain.ProjectStages.PinnedFile", b =>
@@ -143,9 +133,6 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("MarkId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -153,16 +140,9 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("MarkId");
-
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("ProjectStage");
                 });
@@ -211,6 +191,9 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("Mark")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("StageId")
                         .HasColumnType("uuid");
@@ -262,13 +245,23 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
 
             modelBuilder.Entity("ProjectManagementSystem.Domain.ProjectStageAnswers.ProjectStageAnswer", b =>
                 {
-                    b.HasOne("ProjectManagementSystem.Domain.Students.Student", "Student")
+                    b.HasOne("ProjectManagementSystem.Domain.ProjectStages.PinnedFile", "AdditionalResponseFiles")
                         .WithMany()
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("AdditionalResponseFilesId");
+
+                    b.HasOne("ProjectManagementSystem.Domain.ProjectStages.PinnedFile", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Student");
+                    b.HasOne("ProjectManagementSystem.Domain.StudentProjectStages.StudentProjectStage", null)
+                        .WithMany("Answers")
+                        .HasForeignKey("StudentProjectStageId");
+
+                    b.Navigation("AdditionalResponseFiles");
+
+                    b.Navigation("Answer");
                 });
 
             modelBuilder.Entity("ProjectManagementSystem.Domain.ProjectStages.PinnedFile", b =>
@@ -280,27 +273,13 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
 
             modelBuilder.Entity("ProjectManagementSystem.Domain.ProjectStages.ProjectStage", b =>
                 {
-                    b.HasOne("ProjectManagementSystem.Domain.ProjectStageMarks.ProjectStageMark", "Mark")
-                        .WithMany()
-                        .HasForeignKey("MarkId");
-
                     b.HasOne("ProjectManagementSystem.Domain.Projects.Project", "Project")
                         .WithMany("Stages")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectManagementSystem.Domain.Students.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Mark");
-
                     b.Navigation("Project");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("ProjectManagementSystem.Domain.Projects.Project", b =>
@@ -360,6 +339,11 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
             modelBuilder.Entity("ProjectManagementSystem.Domain.Projects.Project", b =>
                 {
                     b.Navigation("Stages");
+                });
+
+            modelBuilder.Entity("ProjectManagementSystem.Domain.StudentProjectStages.StudentProjectStage", b =>
+                {
+                    b.Navigation("Answers");
                 });
 #pragma warning restore 612, 618
         }

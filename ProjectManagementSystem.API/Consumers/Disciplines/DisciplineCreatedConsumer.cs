@@ -4,7 +4,7 @@ using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Disciplines;
 
-namespace ProjectManagementSystem.API.Consumers.Disciplines;
+namespace ProjectManagementSystem.Infrastucture.Consumers.Disciplines;
 
 public class DisciplineCreatedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IDisciplineCreated>
 {
@@ -16,9 +16,7 @@ public class DisciplineCreatedConsumer(ProjectManagementSystemDbContext dbContex
 
         var disciplineId = new DisciplineId(message.Id);
 
-        var discipline = await dbContext.Disciplines.SingleAsync(d => d.Id == disciplineId);
-
-        Discipline.Create(disciplineId, message.Name);
+        var discipline = Discipline.Create(disciplineId, message.Name);
 
         dbContext.Add(discipline);
 

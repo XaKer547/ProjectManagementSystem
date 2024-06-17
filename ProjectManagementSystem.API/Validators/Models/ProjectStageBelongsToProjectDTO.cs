@@ -1,10 +1,10 @@
 ﻿using ProjectManagementSystem.Domain.Projects;
-using ProjectManagementSystem.Domain.ProjectStages;
+using ProjectManagementSystem.Domain.StudentProjectStages;
 
-namespace ProjectManagementSystem.API.Validators.Models;
+namespace ProjectManagementSystem.Infrastucture.Validators.Models;
 
 public record ProjectStageBelongsToProjectDTO
 {
     public ProjectId ProjectId { get; init; }
-    public ProjectStageId ProjectStageId { get; init; }
+    public StudentProjectStageId ProjectStageId { get; init; }
 }

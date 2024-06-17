@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ProjectManagementSystem.API.Helpers;
-using ProjectManagementSystem.API.Models;
+using ProjectManagementSystem.Infrastucture.Helpers;
+using ProjectManagementSystem.Infrastucture.Models;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Application.Commands.ProjectStageAnswers;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
@@ -15,8 +15,9 @@ using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
 using SharedKernel.DTOs.Projects;
 using SharedKernel.DTOs.ProjectStages;
+using ProjectManagementSystem.Domain.StudentProjectStages;
 
-namespace ProjectManagementSystem.API.Controllers;
+namespace ProjectManagementSystem.Infrastucture.Controllers;
 
 [ApiController]
 [Route("/api/[controller]")]
@@ -269,7 +270,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var query = new GetProjectStageQuery()
         {
             ProjectId = new ProjectId(projectId),
-            ProjectStageId = new ProjectStageId(stageId)
+            ProjectStageId = new StudentProjectStageId(stageId)
         };
 
         var stage = await mediator.Send(query);
@@ -293,7 +294,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var command = new CreateProjectStageAnswerCommand()
         {
             ProjectId = new ProjectId(projectId),
-            ProjectStageId = new ProjectStageId(stageId),
+            ProjectStageId = new StudentProjectStageId(stageId),
             PinnedFile = file.ToDTO()
         };
 
@@ -318,7 +319,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var command = new ReturnProjectStageAnswerCommand()
         {
             ProjectId = new ProjectId(projectId),
-            ProjectStageId = new ProjectStageId(stageId),
+            ProjectStageId = new StudentProjectStageId(stageId),
             Remark = model.Remark,
             PinnedFile = model.File?.ToDTO()
         };
@@ -344,7 +345,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var command = new UpdateProjectStageAnswerCommand()
         {
             ProjectId = new ProjectId(projectId),
-            ProjectStageId = new ProjectStageId(stageId),
+            ProjectStageId = new StudentProjectStageId(stageId),
             PinnedFile = file.ToDTO()
         };
 

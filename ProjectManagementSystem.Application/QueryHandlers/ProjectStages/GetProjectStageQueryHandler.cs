@@ -2,6 +2,7 @@
 using MediatR;
 using ProjectManagementSystem.Application.Queries.ProjectStages;
 using ProjectManagementSystem.Domain.Services;
+using SharedKernel.DTOs.ProjectStageAnswers;
 using SharedKernel.DTOs.ProjectStages;
 
 namespace ProjectManagementSystem.Application.QueryHandlers.ProjectStages;
@@ -15,15 +16,22 @@ public sealed class GetProjectStageQueryHandler(IUnitOfWork unitOfWork, IValidat
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var projectStage = unitOfWork.Repository.ProjectStages.Select(p => new ProjectStageDTO
-        {
-            Id = p.Id.Value,
-            Name = p.Name,
-            Description = p.Description,
-            Deadline = p.Deadline,
-            //PinnedFiles = p.PinnedFiles,
-            //    StudentWork = p
-        }).Single(p => p.Id == request.ProjectId.Value);
+        var projectStage = unitOfWork.Repository.StudentProjectStages.Where(p => p.Id == request.ProjectStageId)
+            .Select(p => new ProjectStageDTO
+            {
+                Id = p.Id.Value,
+                Name = p.Stage.Name,
+                Description = p.Stage.Description,
+                Deadline = p.Stage.Deadline,
+                Answers = p.Answers.Select(a => new ProjectStageAnswerDTO()
+                {
+                    Id = a.Id.Value,
+                    StudentWork = a.Answer.FilePath,
+                    AdditionalResponseFiles = a.AdditionalResponseFiles != null ? a.AdditionalResponseFiles.FilePath : null,
+                    Remark = a.Remark,
+                    Returned = a.Returned,
+                }).ToArray()
+            }).Single();
 
         return projectStage;
     }

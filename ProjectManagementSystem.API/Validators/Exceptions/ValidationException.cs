@@ -1,6 +1,6 @@
-﻿using ProjectManagementSystem.API.Validators.Models;
+﻿using ProjectManagementSystem.Infrastucture.Validators.Models;
 
-namespace ProjectManagementSystem.API.Validators.Exceptions;
+namespace ProjectManagementSystem.Infrastucture.Validators.Exceptions;
 
 public sealed class ValidationException(List<ValidationError> errors) : Exception
 {

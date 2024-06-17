@@ -6,7 +6,7 @@ using ProjectManagementSystem.Domain.Students;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Students;
 
-namespace ProjectManagementSystem.API.Consumers.Students;
+namespace ProjectManagementSystem.Infrastucture.Consumers.Students;
 
 public class StudentCreatedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IStudentCreated>
 {

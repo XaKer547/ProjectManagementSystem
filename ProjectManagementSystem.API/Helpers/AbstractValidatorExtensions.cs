@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using ProjectManagementSystem.API.Validators.Disciplines;
-using ProjectManagementSystem.API.Validators.Grops;
-using ProjectManagementSystem.API.Validators.Models;
-using ProjectManagementSystem.API.Validators.Projects;
-using ProjectManagementSystem.API.Validators.ProjectStages;
-using ProjectManagementSystem.API.Validators.Students;
+using ProjectManagementSystem.Infrastucture.Validators.Disciplines;
+using ProjectManagementSystem.Infrastucture.Validators.Grops;
+using ProjectManagementSystem.Infrastucture.Validators.Models;
+using ProjectManagementSystem.Infrastucture.Validators.Projects;
+using ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
+using ProjectManagementSystem.Infrastucture.Validators.Students;
 using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects;
@@ -12,7 +12,7 @@ using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.Students;
 using ProjectManagementSystem.Infrastucture.Data;
 
-namespace ProjectManagementSystem.API.Helpers;
+namespace ProjectManagementSystem.Infrastucture.Helpers;
 
 public static class AbstractValidatorExtensions
 {
@@ -38,7 +38,7 @@ public static class AbstractValidatorExtensions
     }
     public static IRuleBuilderOptions<T, ProjectStageBelongsToProjectDTO> BelongsToProject<T>(this IRuleBuilder<T, ProjectStageBelongsToProjectDTO> ruleBuilder, ProjectManagementSystemDbContext context)
     {
-        return ruleBuilder.Must(x => context.ProjectStages.Where(s => s.Project.Id == x.ProjectId)
+        return ruleBuilder.Must(x => context.StudentProjectStages.Where(s => s.Stage.Project.Id == x.ProjectId)
         .Any(s => s.Id == x.ProjectStageId));
     }
 }
