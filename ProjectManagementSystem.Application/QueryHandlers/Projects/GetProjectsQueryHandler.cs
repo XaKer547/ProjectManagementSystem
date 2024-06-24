@@ -12,12 +12,11 @@ public sealed class GetProjectsQueryHandler(IUnitOfWork unitOfWork) : IRequestHa
 
     public Task<IReadOnlyCollection<ProjectDTO>> Handle(GetProjectsQuery request, CancellationToken cancellationToken)
     {
-        IReadOnlyCollection<ProjectDTO> projects = [.. unitOfWork.Repository.StudentProjects.Select(p => new ProjectDTO
+        IReadOnlyCollection<ProjectDTO> projects = [.. unitOfWork.Repository.ProjectWorks.Select(p => new ProjectDTO
         {
             Id = p.Id.Value,
             Name = p.Name,
             SubjectArea = p.SubjectArea,
-            //TODO: Тут упадет (Вроде)
             ProjectType = p.Project.Type.GetDisplayName()!,
             ProjectTypeId = (int)p.Project.Type,
             DisciplineId = p.Project.Discipline.Id.Value,

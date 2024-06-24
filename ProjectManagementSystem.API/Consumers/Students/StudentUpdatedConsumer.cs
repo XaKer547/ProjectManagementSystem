@@ -5,7 +5,7 @@ using ProjectManagementSystem.Domain.Students;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Students;
 
-namespace ProjectManagementSystem.Infrastucture.Consumers.Students;
+namespace ProjectManagementSystem.API.Consumers.Students;
 
 public class StudentUpdatedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IStudentUpdated>
 {

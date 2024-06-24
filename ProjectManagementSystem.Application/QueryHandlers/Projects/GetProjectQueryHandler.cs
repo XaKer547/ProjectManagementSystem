@@ -16,7 +16,7 @@ public sealed class GetProjectQueryHandler(IUnitOfWork unitOfWork, IValidator<Ge
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var project = unitOfWork.Repository.StudentProjects.Where(p => p.Id == request.ProjectId)
+        var project = unitOfWork.Repository.ProjectWorks.Where(p => p.Id == request.ProjectWorkId)
             .Select(p => new ProjectDTO
             {
                 Id = p.Id.Value,

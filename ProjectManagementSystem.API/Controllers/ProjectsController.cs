@@ -1,23 +1,25 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ProjectManagementSystem.API.Helpers;
+using ProjectManagementSystem.API.Models;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Application.Commands.ProjectStageAnswers;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
+using ProjectManagementSystem.Application.Commands.ProjectWorks;
 using ProjectManagementSystem.Application.Queries.Projects;
 using ProjectManagementSystem.Application.Queries.ProjectStages;
 using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
-using ProjectManagementSystem.Domain.StudentProjects;
+using ProjectManagementSystem.Domain.ProjectWorks;
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
-using ProjectManagementSystem.Infrastucture.Helpers;
-using ProjectManagementSystem.Infrastucture.Models;
 using SharedKernel.DTOs.Projects;
 using SharedKernel.DTOs.ProjectStages;
+using SharedKernel.DTOs.ProjectWorks;
 
-namespace ProjectManagementSystem.Infrastucture.Controllers;
+namespace ProjectManagementSystem.API.Controllers;
 
 [ApiController]
 [Route("/api/[controller]")]
@@ -26,11 +28,11 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     private readonly IMediator mediator = mediator; //создать диплом (общий) -> создать диплом (личный)
 
     /// <summary>
-    /// ƒобавить студенческую работу
+    /// —оздать студенческий проект
     /// </summary>
-    /// <response code="201">”спешно создана</response>
+    /// <response code="201">”спешно создан</response>
     /// <response code="400">«апрос не прошел валидацию</response>
-    /// <response code="403">ѕользователь не имеет доступ на добавление студенческой работы</response>
+    /// <response code="403">ѕользователь не имеет доступ на добавление студенческого проекта</response>
     [HttpPost]
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
@@ -39,16 +41,40 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     {
         var command = new CreateProjectCommand()
         {
-            Name = createProject.Name,
-            SubjectArea = createProject.SubjectArea,
             ProjectType = createProject.ProjectType,
             DisciplineId = new DisciplineId(createProject.DisciplineId),
-            GroupId = new GroupId(createProject.GroupId)
+            GroupId = new GroupId(createProject.GroupId),
+            Deadline = createProject.Deadline,
         };
 
         var projectId = await mediator.Send(command);
 
-        return Created(string.Empty, projectId);
+        return Created(string.Empty, projectId.Value);
+    }
+
+    /// <summary>
+    /// ƒобавить студенческую работу
+    /// </summary>
+    /// <response code="201">”спешно создана</response>
+    /// <response code="400">«апрос не прошел валидацию</response>
+    /// <response code="403">ѕользователь не имеет доступ на добавление студенческой работы</response>
+    [HttpPost("{projectId:guid}")]
+    [ProducesResponseType(201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(403)]
+    public async Task<IActionResult> CreateProjectWork(Guid projectId, CreateProjectWorkDTO createProjectWork)
+    {
+        var command = new CreateProjectWorkCommand()
+        {
+            Name = createProjectWork.Name,
+            SubjectArea = createProjectWork.SubjectArea,
+            StudentId = new StudentId(createProjectWork.StudentId),
+            ProjectId = new ProjectId(projectId)
+        };
+
+        var workId = await mediator.Send(command);
+
+        return Created(string.Empty, workId.Value);
     }
 
     /// <summary>
@@ -79,7 +105,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     {
         var query = new GetProjectQuery()
         {
-            ProjectId = new StudentProjectId(projectId)
+            ProjectWorkId = new ProjectWorkId(projectId)
         };
 
         var project = await mediator.Send(query);
@@ -131,8 +157,6 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var command = new UpdateProjectCommand()
         {
             ProjectId = new ProjectId(projectId),
-            Name = updateProject.Name,
-            SubjectArea = updateProject.SubjectArea,
             DisciplineId = new DisciplineId(updateProject.DisciplineId),
             GroupId = new GroupId(updateProject.GroupId),
             ProjectType = updateProject.ProjectType

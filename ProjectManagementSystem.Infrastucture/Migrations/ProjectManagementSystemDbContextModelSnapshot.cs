@@ -192,7 +192,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Mark")
+                    b.Property<int>("Grade")
                         .HasColumnType("integer");
 
                     b.Property<Guid>("StageId")

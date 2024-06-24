@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProjectManagementSystem.Infrastucture.Validators.Exceptions;
+using ProjectManagementSystem.API.Validators.Exceptions;
 
 namespace ProjectManagementSystem.API.Middlewares;
 

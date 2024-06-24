@@ -2,37 +2,43 @@
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
 using SharedKernel;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProjectManagementSystem.Domain.StudentProjects;
+namespace ProjectManagementSystem.Domain.ProjectWorks;
 
-public class StudentProject : Entity<StudentProjectId>
+public class ProjectWork : Entity<ProjectWorkId>
 {
-    private StudentProject(Project project, Student student, string name, string subjectArea)
+    private ProjectWork(Project project, Student student, string name, string subjectArea)
     {
-        Id = new StudentProjectId();
+        Id = new ProjectWorkId();
         Project = project;
         Name = name;
         SubjectArea = subjectArea;
         Student = student;
         Stages = [];
     }
-    private StudentProject()
+    private ProjectWork()
     { }
 
     public Project Project { get; private set; }
     public Student Student { get; private set; }
     public string Name { get; private set; }
     public string SubjectArea { get; private set; }
-    public int? Mark { get; private set; }
+    public int? Grade { get; private set; }
     public List<StudentProjectStage> Stages { get; private set; }
 
-    public static StudentProject Create(Project project, Student student, string name, string subjectArea)
+    public static ProjectWork Create(Project project, Student student, string name, string subjectArea)
     {
-        return new StudentProject(project, student, name, subjectArea);
+        return new ProjectWork(project, student, name, subjectArea);
+    }
+    public void Update(string name, string subjectArea)
+    {
+        Name = name;
+        SubjectArea = subjectArea;
     }
     public void Graduate(int mark)
     {
-        Mark = mark;
+        Grade = mark;
     }
     public void Delete()
     {

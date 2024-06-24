@@ -4,7 +4,7 @@ using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Groups;
 
-namespace ProjectManagementSystem.Infrastucture.Consumers.Groups;
+namespace ProjectManagementSystem.API.Consumers.Groups;
 
 public class GroupUpdatedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IGroupUpdated>
 {

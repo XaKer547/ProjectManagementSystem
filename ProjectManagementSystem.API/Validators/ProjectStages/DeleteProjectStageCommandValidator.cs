@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using ProjectManagementSystem.API.Helpers;
+using ProjectManagementSystem.API.Validators.Models;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
+namespace ProjectManagementSystem.API.Validators.ProjectStages;
 
 public class DeleteProjectStageCommandValidator : AbstractValidator<DeleteProjectStageCommand>
 {
@@ -14,5 +15,12 @@ public class DeleteProjectStageCommandValidator : AbstractValidator<DeleteProjec
 
         RuleFor(x => x.ProjectStageId)
             .Exists(context);
+
+        RuleFor(x => new ProjectStageBelongsToProjectDTO()
+        {
+            ProjectStageId = x.ProjectStageId,
+            ProjectId = x.ProjectId,
+        })
+            .BelongsToProject(context);
     }
 }

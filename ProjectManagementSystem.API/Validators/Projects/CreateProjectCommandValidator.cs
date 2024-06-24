@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
+using ProjectManagementSystem.API.Helpers;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.Projects;
+namespace ProjectManagementSystem.API.Validators.Projects;
 
 public class CreateProjectCommandValidator : AbstractValidator<CreateProjectCommand>
 {
@@ -18,10 +18,8 @@ public class CreateProjectCommandValidator : AbstractValidator<CreateProjectComm
         RuleFor(x => x.DisciplineId)
             .Exists(context);
 
-        RuleFor(x => x.Name)
-            .NotEmpty();
-
-        RuleFor(x => x.SubjectArea)
-            .NotEmpty();
+        RuleFor(x => x.Deadline)
+            .NotNull()
+            .NotEarlierThanNow();
     }
 }

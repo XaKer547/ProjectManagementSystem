@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
+using ProjectManagementSystem.API.Helpers;
+using ProjectManagementSystem.API.Validators.Models;
 using ProjectManagementSystem.Application.Commands.ProjectStageAnswers;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
-using ProjectManagementSystem.Infrastucture.Validators.Models;
 
 namespace ProjectManagementSystem.API.Validators.ProjectStageAnswers;
 
@@ -10,11 +10,12 @@ public class CreateProjectStageAnswerCommandValidator : AbstractValidator<Create
 {
     public CreateProjectStageAnswerCommandValidator(ProjectManagementSystemDbContext context)
     {
-        RuleFor(x => new ProjectStageBelongsToProjectDTO()
+        RuleFor(x => new StudentProjectStageBelongsToProjectDTO()
         {
             ProjectId = x.ProjectId,
             ProjectStageId = x.ProjectStageId,
-        }).BelongsToProject(context);
+        })
+            .BelongsToProject(context);
 
         RuleFor(x => x.PinnedFile)
             .NotNull();

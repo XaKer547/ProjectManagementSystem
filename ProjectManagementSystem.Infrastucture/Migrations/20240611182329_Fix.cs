@@ -56,7 +56,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                 newName: "IX_ProjectStageAnswer_AnswerId");
 
             migrationBuilder.AddColumn<int>(
-                name: "Mark",
+                name: "Grade",
                 table: "StudentProject",
                 type: "integer",
                 nullable: false,
@@ -131,7 +131,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                 table: "ProjectStageAnswer");
 
             migrationBuilder.DropColumn(
-                name: "Mark",
+                name: "Grade",
                 table: "StudentProject");
 
             migrationBuilder.DropColumn(

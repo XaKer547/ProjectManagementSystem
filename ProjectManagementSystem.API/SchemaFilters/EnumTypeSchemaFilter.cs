@@ -4,7 +4,7 @@ using ProjectManagementSystem.Domain.Helpers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Xml.Linq;
 
-namespace ProjectManagementSystem.Infrastucture.SchemaFilters;
+namespace ProjectManagementSystem.API.SchemaFilters;
 
 public class EnumTypesSchemaFilter : ISchemaFilter
 {

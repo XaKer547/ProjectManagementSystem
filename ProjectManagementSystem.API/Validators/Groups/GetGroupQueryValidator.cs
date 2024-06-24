@@ -1,9 +1,9 @@
-﻿using FluentValidation;
-using ProjectManagementSystem.Application.Queries.Groups;
+﻿using ProjectManagementSystem.Application.Queries.Groups;
+using FluentValidation;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
+using ProjectManagementSystem.API.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.Grops;
+namespace ProjectManagementSystem.API.Validators.Grops;
 
 public class GetGroupQueryValidator : AbstractValidator<GetGroupQuery>
 {

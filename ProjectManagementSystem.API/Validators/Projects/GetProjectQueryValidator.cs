@@ -1,15 +1,15 @@
 ﻿using FluentValidation;
+using ProjectManagementSystem.API.Helpers;
 using ProjectManagementSystem.Application.Queries.Projects;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.Projects;
+namespace ProjectManagementSystem.API.Validators.Projects;
 
 public class GetProjectQueryValidator : AbstractValidator<GetProjectQuery>
 {
     public GetProjectQueryValidator(ProjectManagementSystemDbContext context)
     {
-        RuleFor(x => x.ProjectId)
+        RuleFor(x => x.ProjectWorkId)
             .Exists(context);
     }
 }

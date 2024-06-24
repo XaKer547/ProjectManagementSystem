@@ -95,7 +95,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Mark")
+                    b.Property<int>("Grade")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -283,7 +283,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
 
             modelBuilder.Entity("ProjectManagementSystem.Domain.ProjectStages.ProjectStage", b =>
                 {
-                    b.HasOne("ProjectManagementSystem.Domain.ProjectStageMarks.ProjectStageMark", "Mark")
+                    b.HasOne("ProjectManagementSystem.Domain.ProjectStageMarks.ProjectStageMark", "Grade")
                         .WithMany()
                         .HasForeignKey("MarkId");
 
@@ -299,7 +299,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Mark");
+                    b.Navigation("Grade");
 
                     b.Navigation("Project");
 

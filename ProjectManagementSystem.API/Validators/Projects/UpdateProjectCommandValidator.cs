@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
+using ProjectManagementSystem.API.Helpers;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.Projects;
+namespace ProjectManagementSystem.API.Validators.Projects;
 
 public class UpdateProjectCommandValidator : AbstractValidator<UpdateProjectCommand>
 {
@@ -18,7 +18,7 @@ public class UpdateProjectCommandValidator : AbstractValidator<UpdateProjectComm
         When(x => x.Deadline != null, () =>
         {
             RuleFor(x => (DateTime)x.Deadline)
-            .NotLaterThanNow();
+            .NotEarlierThanNow();
         });
 
         When(x => x.DisciplineId != null, () =>

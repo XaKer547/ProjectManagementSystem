@@ -1,4 +1,4 @@
-﻿namespace ProjectManagementSystem.Infrastucture.Validators.Models;
+﻿namespace ProjectManagementSystem.API.Validators.Models;
 
 public sealed class ValidationError(string propertyName, string errorMessage, string errorCode)
 {

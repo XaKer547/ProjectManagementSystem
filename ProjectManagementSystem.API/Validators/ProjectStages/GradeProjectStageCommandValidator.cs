@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
+using ProjectManagementSystem.API.Helpers;
+using ProjectManagementSystem.API.Validators.Models;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
-using ProjectManagementSystem.Infrastucture.Validators.Models;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
+namespace ProjectManagementSystem.API.Validators.ProjectStages;
 
 public class GradeProjectStageCommandValidator : AbstractValidator<GradeProjectStageCommand>
 {
@@ -13,7 +13,7 @@ public class GradeProjectStageCommandValidator : AbstractValidator<GradeProjectS
         RuleFor(x => x.ProjectId)
             .Exists(context);
 
-        RuleFor(x => new ProjectStageBelongsToProjectDTO()
+        RuleFor(x => new StudentProjectStageBelongsToProjectDTO()
         {
             ProjectStageId = x.ProjectStageId,
             ProjectId = x.ProjectId,
