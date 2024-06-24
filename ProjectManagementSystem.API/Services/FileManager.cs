@@ -4,7 +4,6 @@ using ProjectManagementSystem.Application.Services;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
 using ProjectManagementSystem.Infrastucture.Validators.Models;
-using System.Linq;
 
 namespace ProjectManagementSystem.Infrastucture.Services;
 

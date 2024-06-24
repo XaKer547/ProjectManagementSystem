@@ -2,25 +2,52 @@ version: '3.8'
 
 services:
   pms:
+    container_name: projectmanagementsystem.api
+    hostname: projectmanagementsystem.api
     build:
       context: .
       dockerfile: Dockerfile
+    restart: always
     ports:
       - "5179:80"
       - "7036:443"
+    networks:
+      - smartcollege_broker-network
+      - projectmanagementsystem-network
     depends_on:
-      - db
+      - pms-db
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=db;Port=5432;Database=POSTGRES_DB;User Id=POSTGRES_USER;Password=POSTGRES_PASSWORD;
+      - ConnectionStrings__DefaultConnection=Host=pms-db;Port=5432;Database=ProjectManagementSystem;Username=postgres;Password=qwegjghj01;
+      - AllowedOrigins="http://smartcollege.sso"
+      - SmartCollege.SSO.Base=http://smartcollege.sso
+      - ASPNETCORE_HTTPS_PORTS=443
+      - ASPNETCORE_HTTP_PORTS=80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=qwegjghj01
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/projectmanagementsystem.api.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
 
-  db:
+  pms-db:
+    container_name: cms-db
     image: postgres:latest
+    restart: always
     ports:
       - "5434:5432"
+    networks:
+      - projectmanagementsystem-network
     environment:
       - POSTGRES_DB=ProjectManagementSystem
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=qwegjghj01
     volumes:
-      - postgres_/var/lib/postgresql/data
+      - /postgres:/var/lib/postgresql/pms
+      
+networks:
+  smartcollege_broker-network:
+    name: smartcollege_broker-network
+  smartcollege_sso-network:
+    name: smartcollege_sso-network
+  collegemanagementsystem-network:
+    name: projectmanagementsystem-network
+    driver: bridge

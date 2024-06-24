@@ -57,7 +57,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
 
             migrationBuilder.AddColumn<int>(
                 name: "Mark",
-                table: "StudentProjectStage",
+                table: "StudentProject",
                 type: "integer",
                 nullable: false,
                 defaultValue: 0);
@@ -103,7 +103,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                 name: "FK_ProjectStageAnswer_StudentProjectStage_StudentProjectStageId",
                 table: "ProjectStageAnswer",
                 column: "StudentProjectStageId",
-                principalTable: "StudentProjectStage",
+                principalTable: "StudentProject",
                 principalColumn: "Id");
         }
 
@@ -132,7 +132,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Mark",
-                table: "StudentProjectStage");
+                table: "StudentProject");
 
             migrationBuilder.DropColumn(
                 name: "AdditionalResponseFilesId",

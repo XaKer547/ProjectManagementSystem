@@ -1,5 +1,6 @@
 using FluentValidation;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ProjectManagementSystem.API.Middlewares;
@@ -13,6 +14,7 @@ using ProjectManagementSystem.Infrastucture.Services;
 using ProjectManagementSystem.Infrastucture.Validators.Behaviors;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using static IdentityModel.OidcConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,9 +38,11 @@ builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 builder.Services.AddCors(options =>
 {
+    var origins = builder.Configuration["AllowedOrigins"]!.Split(';');
+
     options.AddDefaultPolicy(
         builder => builder
-        .WithOrigins("https://localhost:7096")
+        .WithOrigins(origins)
         .AllowAnyMethod()
         .AllowAnyHeader()
         .SetIsOriginAllowed((host) => true));
@@ -58,9 +62,41 @@ builder.Services.AddMassTransit(options =>
     });
 });
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultChallengeScheme = "oidc";
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddOpenIdConnect("oidc", options =>
+    {
+        options.Authority = builder.Configuration["SmartCollege.SSO.Base"];
+
+        options.RequireHttpsMetadata = false;
+
+        options.ClientId = "ProjectManagementSystem.API";
+
+        options.ClientSecret = "4d0dabf05d184decbbaae4acc9e89a81";
+
+        options.ResponseType = GrantTypes.ClientCredentials;
+
+        options.Scope.Clear();
+        options.Scope.Add("fullaccess");
+
+        options.GetClaimsFromUserInfoEndpoint = true;
+        options.SaveTokens = true;
+
+        var handler = new HttpClientHandler()
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
+        };
+
+        options.BackchannelHttpHandler = handler;
+    });
+
+
 builder.Services.AddDbContext<ProjectManagementSystemDbContext>(opt =>
 {
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("PgLocalConnection"));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("SmartCollegeConnection"));
 });
 
 builder.Services.AddScoped<IProjectManagementSystemRepository, ProjectManagementSystemDbContext>();
@@ -79,6 +115,28 @@ builder.Services.AddSwaggerGen(options =>
             Title = "Project management system",
             Version = "v1",
         });
+
+    options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Пожалуйста вставьте Bearer вместе с токеном в это поле",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 
@@ -103,7 +161,7 @@ app.UseReDoc(options =>
 
 app.UseMiddleware<ValidationExceptionHandlingMiddleware>();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
@@ -113,6 +171,5 @@ app.UseAuthorization();
 
 app.MapControllers()
     .RequireCors();
-
 
 app.Run();

@@ -9,6 +9,7 @@ using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
+using ProjectManagementSystem.Domain.StudentProjects;
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
 using ProjectManagementSystem.Infrastucture.Helpers;
@@ -22,7 +23,7 @@ namespace ProjectManagementSystem.Infrastucture.Controllers;
 [Route("/api/[controller]")]
 public class ProjectsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator mediator = mediator;
+    private readonly IMediator mediator = mediator; //создать диплом (общий) -> создать диплом (личный)
 
     /// <summary>
     /// Добавить студенческую работу
@@ -78,7 +79,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     {
         var query = new GetProjectQuery()
         {
-            ProjectId = new ProjectId(projectId)
+            ProjectId = new StudentProjectId(projectId)
         };
 
         var project = await mediator.Send(query);

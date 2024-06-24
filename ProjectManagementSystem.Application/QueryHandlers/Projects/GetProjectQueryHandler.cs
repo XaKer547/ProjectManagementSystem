@@ -16,16 +16,16 @@ public sealed class GetProjectQueryHandler(IUnitOfWork unitOfWork, IValidator<Ge
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var project = unitOfWork.Repository.Projects.Where(p => p.Id == request.ProjectId)
+        var project = unitOfWork.Repository.StudentProjects.Where(p => p.Id == request.ProjectId)
             .Select(p => new ProjectDTO
             {
                 Id = p.Id.Value,
                 Name = p.Name,
                 SubjectArea = p.SubjectArea,
-                ProjectType = p.Type.GetDisplayName()!,
-                ProjectTypeId = (int)p.Type,
-                DisciplineId = p.Discipline.Id.Value,
-                DisciplineName = p.Discipline.Name,
+                ProjectType = p.Project.Type.GetDisplayName()!,
+                ProjectTypeId = (int)p.Project.Type,
+                DisciplineId = p.Project.Discipline.Id.Value,
+                DisciplineName = p.Project.Discipline.Name,
             }).Single();
 
         return project;

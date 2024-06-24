@@ -41,4 +41,8 @@ public static class AbstractValidatorExtensions
         return ruleBuilder.Must(x => context.StudentProjectStages.Where(s => s.Stage.Project.Id == x.ProjectId)
         .Any(s => s.Id == x.ProjectStageId));
     }
+    public static IRuleBuilderOptions<T, DateTime> NotLaterThanNow<T>(this IRuleBuilder<T, DateTime> ruleBuilder)
+    {
+        return ruleBuilder.Must(x => x >= DateTime.Now);
+    }
 }

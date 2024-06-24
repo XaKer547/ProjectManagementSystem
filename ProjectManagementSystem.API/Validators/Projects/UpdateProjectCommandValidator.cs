@@ -15,15 +15,21 @@ public class UpdateProjectCommandValidator : AbstractValidator<UpdateProjectComm
         RuleFor(x => x.ProjectType)
             .IsInEnum();
 
-        When(x => x.DisciplineId.Value != Guid.Empty, () =>
+        When(x => x.Deadline != null, () =>
+        {
+            RuleFor(x => (DateTime)x.Deadline)
+            .NotLaterThanNow();
+        });
+
+        When(x => x.DisciplineId != null, () =>
         {
             RuleFor(x => x.DisciplineId)
             .Exists(context);
         });
 
-        When(x => x.GroupId.Value != Guid.Empty, () =>
+        When(x => x.GroupId != null, () =>
         {
-            RuleFor(x => x.DisciplineId)
+            RuleFor(x => x.GroupId)
             .Exists(context);
         });
     }

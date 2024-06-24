@@ -14,4 +14,5 @@ public sealed record UpdateProjectCommand : IRequest
     public ProjectTypes? ProjectType { get; init; }
     public DisciplineId? DisciplineId { get; init; }
     public GroupId? GroupId { get; init; }
+    public DateTime? Deadline { get; init; }
 }

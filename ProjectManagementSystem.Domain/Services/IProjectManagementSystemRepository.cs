@@ -2,6 +2,7 @@
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStages;
+using ProjectManagementSystem.Domain.StudentProjects;
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
 
@@ -11,6 +12,7 @@ public interface IProjectManagementSystemRepository
 {
     IQueryable<Project> Projects { get; }
     IQueryable<ProjectStage> ProjectStages { get; }
+    IQueryable<StudentProject> StudentProjects { get; }
     IQueryable<StudentProjectStage> StudentProjectStages { get; }
     IQueryable<Student> Students { get; }
     IQueryable<Discipline> Disciplines { get; }
