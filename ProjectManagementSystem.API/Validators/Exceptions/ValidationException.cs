@@ -1,4 +1,4 @@
-﻿using ProjectManagementSystem.Infrastucture.Validators.Models;
+﻿using ProjectManagementSystem.API.Validators.Models;
 
 namespace ProjectManagementSystem.API.Validators.Exceptions;
 
