@@ -1,7 +1,5 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ProjectManagementSystem.API.Helpers;
-using ProjectManagementSystem.API.Models;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Application.Commands.ProjectStageAnswers;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
@@ -15,6 +13,8 @@ using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Domain.ProjectWorks;
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
+using ProjectManagementSystem.Infrastucture.Helpers;
+using ProjectManagementSystem.Infrastucture.Models;
 using SharedKernel.DTOs.Projects;
 using SharedKernel.DTOs.ProjectStages;
 using SharedKernel.DTOs.ProjectWorks;
@@ -114,7 +114,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
-    /// Завершить студенческую работу
+    /// Завершить студенческую работу 
     /// </summary>
     /// <param name="projectId">Идентификатор работы</param>
     /// <response code="200"></response>
