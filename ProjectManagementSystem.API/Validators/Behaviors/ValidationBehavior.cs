@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using MediatR;
-using ProjectManagementSystem.Infrastucture.Validators.Models;
+using ProjectManagementSystem.API.Validators.Models;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.Behaviors;
+namespace ProjectManagementSystem.API.Validators.Behaviors;
 public sealed class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IBaseRequest

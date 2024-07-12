@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
+using ProjectManagementSystem.API.Helpers;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
+namespace ProjectManagementSystem.API.Validators.ProjectStages;
 
 public class CreateProjectStageCommandValidator : AbstractValidator<CreateProjectStageCommand>
 {
@@ -16,8 +16,7 @@ public class CreateProjectStageCommandValidator : AbstractValidator<CreateProjec
             .NotEmpty();
 
         RuleFor(x => x.Deadline)
-            .NotNull();
-
-        //RuleFor(x => x.PinnedFiles)
+            .NotNull()
+            .NotEarlierThanNow();
     }
 }

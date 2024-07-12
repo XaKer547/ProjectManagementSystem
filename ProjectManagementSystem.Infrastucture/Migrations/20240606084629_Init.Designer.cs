@@ -95,7 +95,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Mark")
+                    b.Property<int>("Grade")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -207,7 +207,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                     b.ToTable("Project");
                 });
 
-            modelBuilder.Entity("ProjectManagementSystem.Domain.StudentProjectStages.StudentProjectStage", b =>
+            modelBuilder.Entity("ProjectManagementSystem.Domain.StudentProjectStages.StudentProject", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -227,7 +227,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentProjectStage");
+                    b.ToTable("StudentProject");
                 });
 
             modelBuilder.Entity("ProjectManagementSystem.Domain.Students.Student", b =>
@@ -283,7 +283,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
 
             modelBuilder.Entity("ProjectManagementSystem.Domain.ProjectStages.ProjectStage", b =>
                 {
-                    b.HasOne("ProjectManagementSystem.Domain.ProjectStageMarks.ProjectStageMark", "Mark")
+                    b.HasOne("ProjectManagementSystem.Domain.ProjectStageMarks.ProjectStageMark", "Grade")
                         .WithMany()
                         .HasForeignKey("MarkId");
 
@@ -299,7 +299,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Mark");
+                    b.Navigation("Grade");
 
                     b.Navigation("Project");
 
@@ -325,9 +325,9 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("ProjectManagementSystem.Domain.StudentProjectStages.StudentProjectStage", b =>
+            modelBuilder.Entity("ProjectManagementSystem.Domain.StudentProjectStages.StudentProject", b =>
                 {
-                    b.HasOne("ProjectManagementSystem.Domain.ProjectStages.ProjectStage", "Stage")
+                    b.HasOne("ProjectManagementSystem.Domain.ProjectStages.ProjectStage", "Project")
                         .WithMany()
                         .HasForeignKey("StageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -339,7 +339,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Stage");
+                    b.Navigation("Project");
 
                     b.Navigation("Student");
                 });

@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
+using ProjectManagementSystem.API.Helpers;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.Projects;
+namespace ProjectManagementSystem.API.Validators.Projects;
 
 public class UpdateProjectCommandValidator : AbstractValidator<UpdateProjectCommand>
 {
@@ -15,15 +15,21 @@ public class UpdateProjectCommandValidator : AbstractValidator<UpdateProjectComm
         RuleFor(x => x.ProjectType)
             .IsInEnum();
 
-        When(x => x.DisciplineId.Value != Guid.Empty, () =>
+        When(x => x.Deadline != null, () =>
+        {
+            RuleFor(x => (DateTime)x.Deadline)
+            .NotEarlierThanNow();
+        });
+
+        When(x => x.DisciplineId != null, () =>
         {
             RuleFor(x => x.DisciplineId)
             .Exists(context);
         });
 
-        When(x => x.GroupId.Value != Guid.Empty, () =>
+        When(x => x.GroupId != null, () =>
         {
-            RuleFor(x => x.DisciplineId)
+            RuleFor(x => x.GroupId)
             .Exists(context);
         });
     }

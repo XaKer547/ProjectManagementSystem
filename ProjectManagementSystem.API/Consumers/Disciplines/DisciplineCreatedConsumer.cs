@@ -1,9 +1,10 @@
 ﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Disciplines;
 
-namespace ProjectManagementSystem.Infrastucture.Consumers.Disciplines;
+namespace ProjectManagementSystem.API.Consumers.Disciplines;
 
 public class DisciplineCreatedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IDisciplineCreated>
 {

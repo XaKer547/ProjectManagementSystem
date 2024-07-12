@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using ProjectManagementSystem.Application.Commands.Projects;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
+using ProjectManagementSystem.API.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.Projects;
+namespace ProjectManagementSystem.API.Validators.Projects;
 
 public class DeleteProjectCommandValidator : AbstractValidator<DeleteProjectCommand>
 {

@@ -1,9 +1,9 @@
-﻿using FluentValidation;
-using ProjectManagementSystem.Application.Queries.Students;
+﻿using ProjectManagementSystem.Application.Queries.Students;
+using FluentValidation;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
+using ProjectManagementSystem.API.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.Students;
+namespace ProjectManagementSystem.API.Validators.Students;
 
 public class GetStudentsQueryValidator : AbstractValidator<GetStudentsQuery>
 {

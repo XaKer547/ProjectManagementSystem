@@ -1,11 +1,12 @@
 ﻿using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Validations;
 using ProjectManagementSystem.Domain.Groups;
 using ProjectManagementSystem.Domain.Students;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Students;
 
-namespace ProjectManagementSystem.Infrastucture.Consumers.Students;
+namespace ProjectManagementSystem.API.Consumers.Students;
 
 public class StudentCreatedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IStudentCreated>
 {

@@ -6,6 +6,7 @@ using ProjectManagementSystem.Domain.ProjectMarks;
 using ProjectManagementSystem.Domain.Projects;
 using ProjectManagementSystem.Domain.ProjectStageAnswers;
 using ProjectManagementSystem.Domain.ProjectStages;
+using ProjectManagementSystem.Domain.ProjectWorks;
 using ProjectManagementSystem.Domain.Services;
 using ProjectManagementSystem.Domain.StudentProjectStages;
 using ProjectManagementSystem.Domain.Students;
@@ -20,6 +21,7 @@ public class ProjectManagementSystemDbContext(DbContextOptions options) : DbCont
     public IQueryable<Discipline> Disciplines => Set<Discipline>();
     public IQueryable<Group> Groups => Set<Group>();
     public IQueryable<StudentProjectStage> StudentProjectStages => Set<StudentProjectStage>();
+    public IQueryable<ProjectWork> ProjectWorks => Set<ProjectWork>();
 
     public void AddEntity<TEntity>(TEntity entity) where TEntity : class
     {

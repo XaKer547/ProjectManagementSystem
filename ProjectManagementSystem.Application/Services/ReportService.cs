@@ -11,7 +11,9 @@ public class ReportService : IReportService
 
         foreach (var studentGrade in studentGrades)
         {
-            var value = $"{studentGrade.StudentFullName},{studentGrade.Grade}";
+            var mark = studentGrade.Grade.HasValue ? $"{studentGrade.Grade}" : "'-";
+
+            var value = $"{studentGrade.StudentFullName},{mark}";
 
             builder.AppendLine(value);
         }

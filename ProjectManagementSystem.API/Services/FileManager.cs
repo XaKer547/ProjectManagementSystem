@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProjectManagementSystem.API.Validators.Models;
 using ProjectManagementSystem.Application.Models;
 using ProjectManagementSystem.Application.Services;
 using ProjectManagementSystem.Domain.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Validators.Models;
-using System.Linq;
 
-namespace ProjectManagementSystem.Infrastucture.Services;
+namespace ProjectManagementSystem.API.Services;
 
 public class FileManager(ProjectManagementSystemDbContext context, IWebHostEnvironment webHost) : IFileManager
 {
@@ -38,8 +37,11 @@ public class FileManager(ProjectManagementSystemDbContext context, IWebHostEnvir
 
     private ProjectStage GetProjectStageOrThrow(ProjectStageId projectStageId)
     {
-        var stage = context.ProjectStages.Include(p => p.Project)
-         .SingleOrDefault(p => p.Id == projectStageId);
+        var stage = context.ProjectStages
+            .Include(s => s.Project)
+            .Include(s => s.Project.Id)
+            .Include(s => s.Id)
+            .SingleOrDefault(p => p.Id == projectStageId);
 
         if (stage is null)
         {
@@ -52,7 +54,7 @@ public class FileManager(ProjectManagementSystemDbContext context, IWebHostEnvir
     }
     private async Task<PinnedFile> SaveFile(ProjectStage stage, FileDTO file)
     {
-        var pinnedFile = PinnedFile.Create(stage.Project.Name, stage.Name, file.Name);
+        var pinnedFile = PinnedFile.Create(stage.Project.Id.Value.ToString(), stage.Id.Value.ToString(), file.Name);
 
         var path = Path.Combine(webHost.WebRootPath, pinnedFile.FilePath);
 

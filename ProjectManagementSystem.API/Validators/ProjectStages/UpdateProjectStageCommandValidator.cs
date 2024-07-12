@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using ProjectManagementSystem.Application.Commands.ProjectStages;
 using ProjectManagementSystem.Infrastucture.Data;
-using ProjectManagementSystem.Infrastucture.Helpers;
+using ProjectManagementSystem.API.Helpers;
 
-namespace ProjectManagementSystem.Infrastucture.Validators.ProjectStages;
+namespace ProjectManagementSystem.API.Validators.ProjectStages;
 
 public class UpdateProjectStageCommandValidator : AbstractValidator<UpdateProjectStageCommand>
 {

@@ -1,6 +1,6 @@
 ﻿using SharedKernel.DTOs.ProjectStages;
 
-namespace ProjectManagementSystem.Infrastucture.Models;
+namespace ProjectManagementSystem.API.Models;
 
 public class CreateProjectStageModel
 {

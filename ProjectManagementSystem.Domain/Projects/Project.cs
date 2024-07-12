@@ -9,36 +9,31 @@ namespace ProjectManagementSystem.Domain.Projects;
 
 public sealed class Project : Entity<ProjectId>
 {
-    private Project(string name,
-                    string subjectArea,
-                    ProjectTypes type,
+    private Project(ProjectTypes type,
                     Discipline discipline,
-                    Group group)
+                    Group group,
+                    DateTime deadline)
     {
         Id = new ProjectId();
-        Name = name;
-        SubjectArea = subjectArea;
         Type = type;
         Discipline = discipline;
         Group = group;
+        Deadline = deadline;
     }
 
     private Project()
     { }
 
-
-    public string Name { get; private set; }
-    public string SubjectArea { get; private set; }
     public ProjectTypes Type { get; private set; }
     public Discipline Discipline { get; private set; }
     public Group Group { get; private set; }
-
+    public DateTime Deadline { get; private set; }
     public bool Completed { get; private set; } = false;
     public List<ProjectStage> Stages { get; private set; }
 
-    public static Project Create(string name, string subjectArea, ProjectTypes type, Discipline discipline, Group group)
+    public static Project Create(ProjectTypes type, Discipline discipline, Group group, DateTime deadline)
     {
-        var project = new Project(name, subjectArea, type, discipline, group);
+        var project = new Project(type, discipline, group, deadline);
 
         var projectCreatedEvent = new ProjectCreatedEvent()
         {
@@ -49,13 +44,12 @@ public sealed class Project : Entity<ProjectId>
 
         return project;
     }
-    public void Update(string name, string subjectArea, ProjectTypes type, Discipline discipline, Group group)
+    public void Update(ProjectTypes type, Discipline discipline, Group group, DateTime deadline)
     {
-        Name = name;
-        SubjectArea = subjectArea;
         Type = type;
         Discipline = discipline;
         Group = group;
+        Deadline = deadline;
     }
     public void Delete()
     {

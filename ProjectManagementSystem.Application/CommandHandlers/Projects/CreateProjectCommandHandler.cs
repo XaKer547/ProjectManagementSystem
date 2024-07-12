@@ -19,7 +19,7 @@ public sealed class CreateProjectCommandHandler(IUnitOfWork unitOfWork, IValidat
 
         var group = unitOfWork.Repository.Groups.Single(g => g.Id == request.GroupId);
 
-        var project = Project.Create(request.Name, request.SubjectArea, request.ProjectType, discipline, group);
+        var project = Project.Create(request.ProjectType, discipline, group, request.Deadline);
 
         unitOfWork.Repository.AddEntity(project);
 

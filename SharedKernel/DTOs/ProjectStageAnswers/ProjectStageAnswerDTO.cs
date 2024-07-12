@@ -1,6 +1,6 @@
 ﻿namespace SharedKernel.DTOs.ProjectStageAnswers;
 
-public class ProjectStageAnswerDTO
+public sealed record ProjectStageAnswerDTO
 {
     public Guid Id { get; init; }
     public string StudentWork { get; init; }

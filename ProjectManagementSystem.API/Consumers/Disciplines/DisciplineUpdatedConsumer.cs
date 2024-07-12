@@ -4,7 +4,7 @@ using ProjectManagementSystem.Domain.Disciplines;
 using ProjectManagementSystem.Infrastucture.Data;
 using SmartCollege.RabbitMQ.Contracts.Disciplines;
 
-namespace ProjectManagementSystem.Infrastucture.Consumers.Disciplines;
+namespace ProjectManagementSystem.API.Consumers.Disciplines;
 
 public class DisciplineUpdatedConsumer(ProjectManagementSystemDbContext dbContext) : IConsumer<IDisciplineUpdated>
 {

@@ -180,7 +180,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentProjectStage",
+                name: "StudentProject",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -247,12 +247,12 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentProjectStage_StageId",
-                table: "StudentProjectStage",
+                table: "StudentProject",
                 column: "StageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentProjectStage_StudentId",
-                table: "StudentProjectStage",
+                table: "StudentProject",
                 column: "StudentId");
         }
 
@@ -266,7 +266,7 @@ namespace ProjectManagementSystem.Infrastucture.Migrations
                 name: "ProjectStageAnswer");
 
             migrationBuilder.DropTable(
-                name: "StudentProjectStage");
+                name: "StudentProject");
 
             migrationBuilder.DropTable(
                 name: "ProjectStage");
